@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'SwiftToast_Example' do
+  pod 'SwiftToast', :path => '../'
+
+  target 'SwiftToast_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
