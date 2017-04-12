@@ -29,7 +29,7 @@
 
 /* Begin PBXFileReference section */
 		1C8B1EF1959EB42A22F6AC8F /* Pods_SwiftToast_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftToast_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		21C01FA07304F3BFE254462D /* SwiftToast.podspec */ = {isa = PBXFileReference; includeInIndex = 1; name = SwiftToast.podspec; path = ../SwiftToast.podspec; sourceTree = "<group>"; };
+		21C01FA07304F3BFE254462D /* SwiftToast.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = SwiftToast.podspec; path = ../SwiftToast.podspec; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* SwiftToast_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftToast_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -40,13 +40,13 @@
 		607FACE51AFB9204008FA782 /* SwiftToast_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftToast_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
-		8C6B0BC48594BDEA9D97B642 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		8C6B0BC48594BDEA9D97B642 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		9EF4B41BCA9446CE1724772A /* Pods-SwiftToast_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftToast_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftToast_Example/Pods-SwiftToast_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		A23A6710438D43A006C59334 /* Pods_SwiftToast_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftToast_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBDE481A1A650FAD016F821A /* Pods-SwiftToast_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftToast_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftToast_Example/Pods-SwiftToast_Example.release.xcconfig"; sourceTree = "<group>"; };
 		DE0853EC036585C3CF78B4EF /* Pods-SwiftToast_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftToast_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftToast_Tests/Pods-SwiftToast_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		E94B56A9F5633C4CDB2B5C88 /* Pods-SwiftToast_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftToast_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftToast_Tests/Pods-SwiftToast_Tests.debug.xcconfig"; sourceTree = "<group>"; };
-		F611FA0B0ACF6FECC5A2670C /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		F611FA0B0ACF6FECC5A2670C /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -536,6 +536,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SwiftToast_Example.app/SwiftToast_Example";
 			};
 			name = Debug;
 		};
@@ -552,6 +553,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SwiftToast_Example.app/SwiftToast_Example";
 			};
 			name = Release;
 		};

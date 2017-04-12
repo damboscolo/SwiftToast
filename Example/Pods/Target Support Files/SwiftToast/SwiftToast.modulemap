@@ -1,0 +1,6 @@
+framework module SwiftToast {
+  umbrella header "SwiftToast-umbrella.h"
+
+  export *
+  module * { export * }
+}
