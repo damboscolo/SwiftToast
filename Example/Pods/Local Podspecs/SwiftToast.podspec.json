@@ -16,7 +16,11 @@
     "tag": "0.1.0"
   },
   "platforms": {
-    "ios": "8.0"
+    "ios": "9.0"
   },
-  "source_files": "SwiftToast/Classes/**/*"
+  "source_files": "SwiftToast/Classes/**/*",
+  "resources": [
+    "images/*.png",
+    "classes/SwiftToastView.xib"
+  ]
 }

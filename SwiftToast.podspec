@@ -28,13 +28,15 @@ TODO: Add long description of the pod here.
   s.source           = { :git => 'https://github.com/damboscolo/SwiftToast.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
-  s.ios.deployment_target = '8.0'
+  s.ios.deployment_target = '9.0'
 
   s.source_files = 'SwiftToast/Classes/**/*'
-  
+
+  s.resources = ["images/*.png", "classes/SwiftToastView.xib"]
+
   # s.resource_bundles = {
-  #   'SwiftToast' => ['SwiftToast/Assets/*.png']
-  # }
+  #   'SwiftToast' => ['SwiftToast/Classes/SwiftToastView.xib']
+  #}
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
