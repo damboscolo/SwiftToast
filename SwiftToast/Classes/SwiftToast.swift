@@ -37,7 +37,6 @@ public class SwiftToastConfig {
 }
 
 public class SwiftToast {
-    
     public static var shared = SwiftToast()
     
     var delegate: SwiftToastDelegate?
@@ -56,11 +55,8 @@ public class SwiftToast {
         if let keyWindow = UIApplication.shared.keyWindow {
             guard let toastView = toastView else {
                 return
-            }
-            
-            // Set toastView delegate
+            }            
             toastView.delegate = self
-            
             keyWindow.addSubview(toastView)
             
             // Set constraints
@@ -118,12 +114,13 @@ public class SwiftToast {
             // after dismiss if needed, setup toast
             toastView.configure(with: toast.text ?? "", image: toast.image, color: toast.backgroundColor ?? UIColor.white)
             UIApplication.shared.keyWindow?.layoutIfNeeded()
-            
+
             // present
             UIView.animate(withDuration: 0.3, delay: 0.0, options: .curveEaseOut, animations: {
                 self.topConstraint?.constant = 0.0
                 UIApplication.shared.statusBarStyle = self.preferredStatusBarStyle
                 UIApplication.shared.keyWindow?.layoutIfNeeded()
+                
             }, completion: { (_ finished) in
                 if finished, let duration = toast.duration {
                     self.hideTimer = Timer.scheduledTimer(timeInterval: duration, target: self, selector: #selector(self.hideTimerSelector(_:)), userInfo: nil, repeats: false)

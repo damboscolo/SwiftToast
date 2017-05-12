@@ -17,10 +17,12 @@ class SwiftToastView: UIView {
     var delegate: SwiftToastViewDelegate?
 
     // MARK:- Outlets
+    
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!
     
     // MARK:- Initializers
+    
     class func nib() -> SwiftToastView? {
         return Constants.bundle?.loadNibNamed("SwiftToastView", owner: self, options: nil)?.first as? SwiftToastView
     }
@@ -31,6 +33,7 @@ class SwiftToastView: UIView {
     }
     
     // MARK:- Configuration
+    
     func configure(with message: String, image: UIImage?, color: UIColor) {
         titleLabel.text = message
         imageView.image = image
@@ -38,6 +41,7 @@ class SwiftToastView: UIView {
     }
     
     // MARK:- Actions
+    
     @objc private func toastViewButtonTouchUpInside(_ sender: UIGestureRecognizer) {
         delegate?.swiftToastViewDidTouchUpInside(self)
     }
