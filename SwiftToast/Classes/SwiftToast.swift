@@ -42,9 +42,9 @@ public class SwiftToast {
     
     var delegate: SwiftToastDelegate?
     
-    private var toastView = SwiftToastView.nib()
+    private var toastView: SwiftToastView? = SwiftToastView.nib()
     private var topConstraint: NSLayoutConstraint?
-    private var hideTimer = Timer()
+    private var hideTimer: Timer = Timer()
     
     private init() {
         self.setup()
@@ -54,6 +54,10 @@ public class SwiftToast {
     
     private func setup() {
         if let keyWindow = UIApplication.shared.keyWindow {
+            guard let toastView = toastView else {
+                return
+            }
+            
             // Set toastView delegate
             toastView.delegate = self
             
@@ -71,27 +75,27 @@ public class SwiftToast {
     
     // MARK:- Customizations
     
-    var font: UIFont {
+    var font: UIFont? {
         get {
-            return self.toastView.titleLabel.font
+            return self.toastView?.titleLabel.font
         } set {
-            self.toastView.titleLabel.font = newValue
+            self.toastView?.titleLabel.font = newValue
         }
     }
     
-    var textColor: UIColor {
+    var textColor: UIColor? {
         get {
-            return self.toastView.titleLabel.textColor
+            return self.toastView?.titleLabel.textColor
         } set {
-            self.toastView.titleLabel.textColor = newValue
+            self.toastView?.titleLabel.textColor = newValue
         }
     }
     
-    var backgroundColor: UIColor {
+    var backgroundColor: UIColor? {
         get {
-            return self.toastView.backgroundColor ?? UIColor.clear
+            return self.toastView?.backgroundColor
         } set {
-            self.toastView.backgroundColor = newValue
+            self.toastView?.backgroundColor = newValue
         }
     }
     
@@ -102,6 +106,9 @@ public class SwiftToast {
     // MARK:- Public functions
     
     public func present(_ toast: SwiftToastConfig) {
+        guard let toastView = toastView else {
+            return
+        }
         UIApplication.shared.keyWindow?.layoutIfNeeded()
         font = toast.font ?? font
         preferredStatusBarStyle = toast.statusBarStyle ?? preferredStatusBarStyle
@@ -109,7 +116,7 @@ public class SwiftToast {
         
         dismiss {
             // after dismiss if needed, setup toast
-            self.toastView.configure(with: toast.text ?? "", image: toast.image, color: toast.backgroundColor ?? self.backgroundColor)
+            toastView.configure(with: toast.text ?? "", image: toast.image, color: toast.backgroundColor ?? UIColor.white)
             UIApplication.shared.keyWindow?.layoutIfNeeded()
             
             // present
@@ -132,10 +139,13 @@ public class SwiftToast {
     }
     
     func dismiss(completion: (() -> Void)?) {
+        guard let toastView = toastView else {
+            return
+        }
         hideTimer.invalidate()
         
         UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
-            self.topConstraint?.constant = -self.toastView.frame.size.height
+            self.topConstraint?.constant = -toastView.frame.size.height
             UIApplication.shared.keyWindow?.layoutIfNeeded()
         }, completion: { (_ finished) in
             if finished {

@@ -21,8 +21,8 @@ class SwiftToastView: UIView {
     @IBOutlet weak var imageView: UIImageView!
     
     // MARK:- Initializers
-    class func nib() -> SwiftToastView {
-        return Bundle.main.loadNibNamed("SwiftToastView", owner: self, options: nil)?.first as? SwiftToastView ?? SwiftToastView()
+    class func nib() -> SwiftToastView? {
+        return Constants.bundle?.loadNibNamed("SwiftToastView", owner: self, options: nil)?.first as? SwiftToastView
     }
     
     override func awakeFromNib() {
