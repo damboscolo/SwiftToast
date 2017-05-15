@@ -21,6 +21,11 @@ class SwiftToastView: UIView {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!
     
+    // MARK:- NSLayoutConstraints
+    
+    @IBOutlet weak var viewTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var viewBottomConstraint: NSLayoutConstraint!
+    
     // MARK:- Initializers
     
     class func nib() -> SwiftToastView? {

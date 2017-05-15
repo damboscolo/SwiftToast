@@ -40,6 +40,8 @@
             <connections>
                 <outlet property="imageView" destination="JMe-BX-zZc" id="0qI-cu-Mqg"/>
                 <outlet property="titleLabel" destination="aYN-wP-j3Z" id="y0d-WR-6U8"/>
+                <outlet property="viewBottomConstraint" destination="xE6-xq-DXm" id="L1Y-qQ-G8a"/>
+                <outlet property="viewTopConstraint" destination="pG6-VF-CTS" id="Yen-Oa-6DV"/>
             </connections>
             <point key="canvasLocation" x="-1916" y="-504"/>
         </view>
