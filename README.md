@@ -5,7 +5,7 @@
 [![License](https://img.shields.io/cocoapods/l/SwiftToast.svg?style=flat)](http://cocoapods.org/pods/SwiftToast)
 [![Platform](https://img.shields.io/cocoapods/p/SwiftToast.svg?style=flat)](http://cocoapods.org/pods/SwiftToast)
 
-SwiftToast is a simples Toast
+SwiftToast is a simple Toast
 
 ## Example
 
@@ -35,7 +35,7 @@ github 'damboscolo/SwiftToast', '~> 0.1'
 ## How to use
 
 
-###  SwiftToastStyle
+###  Toast Style
 
 ```swift
 public enum SwiftToastStyle {
@@ -44,11 +44,11 @@ public enum SwiftToastStyle {
 }
 ```
 
-### Customizations
+### Customization
 
 ```swift
 let test = SwiftToast(
-            text: "This is an Toast",
+            text: "This is a Toast",
             textAlignment: .left,
             image: nil,
             backgroundColor: UIColor.red,
@@ -75,7 +75,7 @@ SwiftToastController.shared.present(toast)
 |                   Text font                  |       font      |       UIFont       | .systemFont(ofSize: 13.0) |
 | Duration. If nil, user has to tap to dismiss |     duration    |       Double       |            1.0            |
 |   Status bar style during toast appearance   |  statusBarStyle |  UIStatusBarStyle  |       .lightContent       |
-|            Status bar show or not            |  aboveStatusBar |        Bool        |           false           |
+|            Hide/Show status bar              |  aboveStatusBar |        Bool        |           false           |
 |                   Delegate                   |      target     | SwiftToastDelegate |            nil            |
 |                  Toast style                 |      style      |   SwiftToastStyle  |       .navigationBar      |
 
