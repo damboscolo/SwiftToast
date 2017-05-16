@@ -14,12 +14,14 @@ public protocol SwiftToastDelegate {
 
 public class SwiftToast {
     var text: String?
+    var textAlignment: NSTextAlignment
     var image: UIImage?
     var backgroundColor: UIColor?
     var textColor: UIColor?
     var font: UIFont?
     var duration: Double?
     var statusBarStyle: UIStatusBarStyle?
+    var aboveStatusBar: Bool
     var delegate: SwiftToastDelegate?
     var style: SwiftToastStyle
     
@@ -29,17 +31,21 @@ public class SwiftToast {
     }
     
     public init() {
+        self.textAlignment = .left
+        self.aboveStatusBar = false
         self.style = .navigationBar
     }
     
-    public init(text: String?, image: UIImage?, backgroundColor: UIColor?, textColor: UIColor?, font: UIFont?, duration: Double?, statusBarStyle: UIStatusBarStyle?, target: SwiftToastDelegate?, style: SwiftToastStyle) {
+    public init(text: String?, textAlignment: NSTextAlignment, image: UIImage?, backgroundColor: UIColor?, textColor: UIColor?, font: UIFont?, duration: Double?, statusBarStyle: UIStatusBarStyle?, aboveStatusBar: Bool, target: SwiftToastDelegate?, style: SwiftToastStyle) {
         self.text = text
+        self.textAlignment = textAlignment
         self.image = image
         self.backgroundColor = backgroundColor
         self.textColor = textColor
         self.font = font
         self.duration = duration
         self.statusBarStyle = statusBarStyle
+        self.aboveStatusBar = aboveStatusBar
         self.delegate = target
         self.style = style
     }
@@ -105,7 +111,7 @@ public class SwiftToastController {
     
     func configureStatusBar(hide: Bool) {
         if hide {
-            if self.currentToast.style == .statusBar {
+            if currentToast.style == .statusBar || currentToast.aboveStatusBar {
                 UIApplication.shared.keyWindow?.windowLevel = UIWindowLevelStatusBar + 1
             } else {
                 UIApplication.shared.statusBarStyle = preferredStatusBarStyle
@@ -163,7 +169,7 @@ public class SwiftToastController {
         
         dismiss {
             // after dismiss if needed, setup toast
-            toastView.configure(with: toast.text ?? "", image: toast.image, color: toast.backgroundColor ?? UIColor.white)
+            toastView.configure(with: toast.text ?? "", textAlignment: toast.textAlignment, image: toast.image, color: toast.backgroundColor ?? UIColor.white)
             UIApplication.shared.keyWindow?.layoutIfNeeded()
 
             // present
