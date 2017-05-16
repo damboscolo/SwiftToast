@@ -21,6 +21,11 @@ class SwiftToastView: UIView {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!
     
+    // MARK:- NSLayoutConstraints
+    
+    @IBOutlet weak var viewTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var viewBottomConstraint: NSLayoutConstraint!
+    
     // MARK:- Initializers
     
     class func nib() -> SwiftToastView? {
@@ -34,10 +39,17 @@ class SwiftToastView: UIView {
     
     // MARK:- Configuration
     
-    func configure(with message: String, image: UIImage?, color: UIColor) {
-        titleLabel.text = message
-        imageView.image = image
+    func configure(with text: String, textAlignment: NSTextAlignment, image: UIImage?, color: UIColor) {
+        titleLabel.text = text
+        titleLabel.textAlignment = textAlignment
         backgroundColor = color
+
+        if let image = image {
+            imageView.image = image
+            imageView.isHidden = false
+        } else {
+            imageView.isHidden = true
+        }
     }
     
     // MARK:- Actions
