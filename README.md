@@ -65,21 +65,80 @@ SwiftToastController.shared.present(toast)
 
 ### Default values
 
-|                  Definition                  |       var       |        type        |           value           |
-|:--------------------------------------------:|:---------------:|:------------------:|:-------------------------:|
-|                  Toast text                  |       text      |       String       |             ""            |
-|             Toast text alignment             |  textAlignment  |   NSTextAlignment  |           .left           |
-|            Toast background color            | backgroundColor |       UIColor      |            .red           |
-|                  Text color                  |    textColor    |       UIColor      |           .white          |
-|                  Toast image                 |      image      |       UIImage      |            nil            |
-|                   Text font                  |       font      |       UIFont       | .systemFont(ofSize: 13.0) |
-| Duration. If nil, user has to tap to dismiss |     duration    |       Double       |            1.0            |
-|   Status bar style during toast appearance   |  statusBarStyle |  UIStatusBarStyle  |       .lightContent       |
-|            Hide/Show status bar              |  aboveStatusBar |        Bool        |           false           |
-|                   Delegate                   |      target     | SwiftToastDelegate |            nil            |
-|                  Toast style                 |      style      |   SwiftToastStyle  |       .navigationBar      |
-
-
+<table class="tg">
+  <tr>
+    <th class="tg-baqh">Definition</th>
+    <th class="tg-baqh">var</th>
+    <th class="tg-baqh">type</th>
+    <th class="tg-baqh">value</th>
+  </tr>
+  <tr>
+    <td class="tg-baqh">Toast text</td>
+    <td class="tg-baqh">text</td>
+    <td class="tg-baqh">String</td>
+    <td class="tg-baqh">""</td>
+  </tr>
+  <tr>
+    <td class="tg-baqh">Toast text alignment </td>
+    <td class="tg-baqh">textAlignment</td>
+    <td class="tg-baqh">NSTextAlignment</td>
+    <td class="tg-baqh">.left</td>
+  </tr>
+  <tr>
+    <td class="tg-baqh">Toast background color</td>
+    <td class="tg-baqh">backgroundColor</td>
+    <td class="tg-baqh">UIColor</td>
+    <td class="tg-baqh">.red</td>
+  </tr>
+  <tr>
+    <td class="tg-baqh">Text color</td>
+    <td class="tg-baqh">textColor</td>
+    <td class="tg-baqh">UIColor</td>
+    <td class="tg-baqh"><br>.white<br></td>
+  </tr>
+  <tr>
+    <td class="tg-baqh">Toast image</td>
+    <td class="tg-baqh">image</td>
+    <td class="tg-baqh">UIImage</td>
+    <td class="tg-baqh">nil</td>
+  </tr>
+  <tr>
+    <td class="tg-baqh">Text font</td>
+    <td class="tg-baqh">font</td>
+    <td class="tg-baqh">UIFont</td>
+    <td class="tg-baqh">.systemFont(ofSize: 13.0)</td>
+  </tr>
+  <tr>
+    <td class="tg-baqh">Duration. If nil, user has to tap to dismiss</td>
+    <td class="tg-baqh">duration</td>
+    <td class="tg-baqh">Double</td>
+    <td class="tg-baqh">1.0</td>
+  </tr>
+  <tr>
+    <td class="tg-baqh">Status bar style during toast appearance</td>
+    <td class="tg-baqh">statusBarStyle</td>
+    <td class="tg-baqh">UIStatusBarStyle</td>
+    <td class="tg-baqh">.lightContent</td>
+  </tr>
+  <tr>
+    <td class="tg-baqh">Show/Hide status bar</td>
+    <td class="tg-baqh">aboveStatusBar</td>
+    <td class="tg-baqh">Bool</td>
+    <td class="tg-baqh">false</td>
+  </tr>
+  <tr>
+    <td class="tg-baqh">Delegate</td>
+    <td class="tg-baqh">target</td>
+    <td class="tg-baqh">SwiftToastDelegate</td>
+    <td class="tg-baqh">nil</td>
+  </tr>
+  <tr>
+    <td class="tg-baqh">Toast style</td>
+    <td class="tg-baqh">style</td>
+    <td class="tg-baqh">SwiftToastStyle</td>
+    <td class="tg-baqh">.navigationBar</td>
+  </tr>
+</table>
 
 ## Author
 
