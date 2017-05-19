@@ -11,47 +11,65 @@ import UIKit
 public protocol SwiftToastDelegate {
     func swiftToastDidTouchUpInside(_ swiftToast: SwiftToast)
 }
-
+public enum SwiftToastStyle {
+    case navigationBar
+    case statusBar
+}
 public class SwiftToast {
-    var text: String?
+    var text: String
     var textAlignment: NSTextAlignment
     var image: UIImage?
-    var backgroundColor: UIColor?
-    var textColor: UIColor?
-    var font: UIFont?
+    var backgroundColor: UIColor
+    var textColor: UIColor
+    var font: UIFont
     var duration: Double?
-    var statusBarStyle: UIStatusBarStyle?
+    var statusBarStyle: UIStatusBarStyle
     var aboveStatusBar: Bool
     var delegate: SwiftToastDelegate?
     var style: SwiftToastStyle
     
-    public enum SwiftToastStyle {
-        case navigationBar
-        case statusBar
-    }
-    
-    public init() {
-        self.textAlignment = .left
-        self.aboveStatusBar = false
-        self.style = .navigationBar
-    }
-    
-    public init(text: String?, textAlignment: NSTextAlignment, image: UIImage?, backgroundColor: UIColor?, textColor: UIColor?, font: UIFont?, duration: Double?, statusBarStyle: UIStatusBarStyle?, aboveStatusBar: Bool, target: SwiftToastDelegate?, style: SwiftToastStyle) {
-        self.text = text
-        self.textAlignment = textAlignment
+    public init(text: String? = "",
+                textAlignment: NSTextAlignment? = .center,
+                image: UIImage? = nil,
+                backgroundColor: UIColor? = .red,
+                textColor: UIColor? = .white,
+                font: UIFont? = .systemFont(ofSize: 14.0),
+                duration: Double? = 2.0,
+                statusBarStyle: UIStatusBarStyle? = .lightContent,
+                aboveStatusBar: Bool? = false,
+                target: SwiftToastDelegate? = nil,
+                style: SwiftToastStyle? = .navigationBar)
+    {
+        self.text = text!
+        self.textAlignment = textAlignment!
         self.image = image
-        self.backgroundColor = backgroundColor
-        self.textColor = textColor
-        self.font = font
+        self.backgroundColor = backgroundColor!
+        self.textColor = textColor!
+        self.font = font!
         self.duration = duration
-        self.statusBarStyle = statusBarStyle
-        self.aboveStatusBar = aboveStatusBar
+        self.statusBarStyle = statusBarStyle!
+        self.aboveStatusBar = aboveStatusBar!
         self.delegate = target
-        self.style = style
+        self.style = style!
     }
 }
 
 public class SwiftToastController {
+    // MARK:- Defaults values
+//    
+//    var text: String = ""
+//    var textAlignment: NSTextAlignment = .center
+//    var image: UIImage? = nil
+//    var backgroundColor: UIColor = .red
+//    var textColor: UIColor = .white
+//    var font: UIFont = .systemFont(ofSize: 14.0)
+//    var duration: Double? = 2.0
+//    var statusBarStyle: UIStatusBarStyle = .lightContent
+//    var aboveStatusBar: Bool = false
+//    var target: SwiftToastDelegate? = nil
+//    var style: SwiftToastStyle = .navigationBar
+
+    
     public static var shared = SwiftToastController()
     
     var delegate: SwiftToastDelegate?
@@ -114,43 +132,19 @@ public class SwiftToastController {
             if currentToast.style == .statusBar || currentToast.aboveStatusBar {
                 UIApplication.shared.keyWindow?.windowLevel = UIWindowLevelStatusBar + 1
             } else {
-                UIApplication.shared.statusBarStyle = preferredStatusBarStyle
+                UIApplication.shared.statusBarStyle = statusBarStyle
             }
         } else {
             UIApplication.shared.keyWindow?.windowLevel = UIWindowLevelNormal
-            UIApplication.shared.statusBarStyle = currentStatusBarStyle
+            UIApplication.shared.statusBarStyle = applicationStatusBarStyle
         }
     }
     
     // MARK:- Customizations
-    
-    var font: UIFont? {
-        get {
-            return self.toastView?.titleLabel.font
-        } set {
-            self.toastView?.titleLabel.font = newValue
-        }
-    }
-    
-    var textColor: UIColor? {
-        get {
-            return self.toastView?.titleLabel.textColor
-        } set {
-            self.toastView?.titleLabel.textColor = newValue
-        }
-    }
-    
-    var backgroundColor: UIColor? {
-        get {
-            return self.toastView?.backgroundColor
-        } set {
-            self.toastView?.backgroundColor = newValue
-        }
-    }
-    
+
     // status bar
-    var currentStatusBarStyle: UIStatusBarStyle = UIApplication.shared.statusBarStyle
-    var preferredStatusBarStyle: UIStatusBarStyle = .lightContent
+    var applicationStatusBarStyle: UIStatusBarStyle = UIApplication.shared.statusBarStyle
+    var statusBarStyle: UIStatusBarStyle = .lightContent
     
     // MARK:- Public functions
     
@@ -159,18 +153,20 @@ public class SwiftToastController {
             return
         }
 
-        
         dismiss {
             // after dismiss if needed, setup toast
-            
             self.currentToast = toast
             self.configureToastStyle()
-            
-            self.font = toast.font ?? self.font
-            self.preferredStatusBarStyle = toast.statusBarStyle ?? self.preferredStatusBarStyle
+            self.statusBarStyle = toast.statusBarStyle
             self.delegate = toast.delegate
             
-            toastView.configure(with: toast.text ?? "", textAlignment: toast.textAlignment, image: toast.image, color: toast.backgroundColor ?? UIColor.white)
+            toastView.configure(with: toast.text,
+                                textColor: toast.textColor,
+                                font: toast.font,
+                                textAlignment: toast.textAlignment,
+                                image: toast.image,
+                                color: toast.backgroundColor
+            )
             UIApplication.shared.keyWindow?.layoutIfNeeded()
 
             // present
