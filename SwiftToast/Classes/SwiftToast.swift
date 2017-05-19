@@ -158,17 +158,18 @@ public class SwiftToastController {
         guard let toastView = toastView else {
             return
         }
-        
-        currentToast = toast
-        configureToastStyle()
-        
-        UIApplication.shared.keyWindow?.layoutIfNeeded()
-        font = toast.font ?? font
-        preferredStatusBarStyle = toast.statusBarStyle ?? preferredStatusBarStyle
-        delegate = toast.delegate
+
         
         dismiss {
             // after dismiss if needed, setup toast
+            
+            self.currentToast = toast
+            self.configureToastStyle()
+            
+            self.font = toast.font ?? self.font
+            self.preferredStatusBarStyle = toast.statusBarStyle ?? self.preferredStatusBarStyle
+            self.delegate = toast.delegate
+            
             toastView.configure(with: toast.text ?? "", textAlignment: toast.textAlignment, image: toast.image, color: toast.backgroundColor ?? UIColor.white)
             UIApplication.shared.keyWindow?.layoutIfNeeded()
 
