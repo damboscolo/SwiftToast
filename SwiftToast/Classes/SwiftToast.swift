@@ -12,31 +12,36 @@ public protocol SwiftToastDelegate {
     func swiftToastDidTouchUpInside(_ swiftToast: SwiftToast)
 }
 
+public enum SwiftToastStyle {
+    case navigationBar
+    case statusBar
+}
+
 public class SwiftToast {
     var text: String?
-    var textAlignment: NSTextAlignment
+    var textAlignment: NSTextAlignment?
     var image: UIImage?
     var backgroundColor: UIColor?
     var textColor: UIColor?
     var font: UIFont?
     var duration: Double?
     var statusBarStyle: UIStatusBarStyle?
-    var aboveStatusBar: Bool
+    var aboveStatusBar: Bool?
     var delegate: SwiftToastDelegate?
-    var style: SwiftToastStyle
+    var style: SwiftToastStyle?
     
-    public enum SwiftToastStyle {
-        case navigationBar
-        case statusBar
-    }
-    
-    public init() {
-        self.textAlignment = .left
-        self.aboveStatusBar = false
-        self.style = .navigationBar
-    }
-    
-    public init(text: String?, textAlignment: NSTextAlignment, image: UIImage?, backgroundColor: UIColor?, textColor: UIColor?, font: UIFont?, duration: Double?, statusBarStyle: UIStatusBarStyle?, aboveStatusBar: Bool, target: SwiftToastDelegate?, style: SwiftToastStyle) {
+    public init(text: String? = nil,
+                textAlignment: NSTextAlignment? = nil,
+                image: UIImage? = nil,
+                backgroundColor: UIColor? = nil,
+                textColor: UIColor? = nil,
+                font: UIFont? = nil,
+                duration: Double? = 2.0,
+                statusBarStyle: UIStatusBarStyle? = nil,
+                aboveStatusBar: Bool? = nil,
+                target: SwiftToastDelegate? = nil,
+                style: SwiftToastStyle? = nil)
+    {
         self.text = text
         self.textAlignment = textAlignment
         self.image = image
@@ -52,6 +57,20 @@ public class SwiftToast {
 }
 
 public class SwiftToastController {
+    
+    // MARK:- Defaults values
+    
+    public var text: String = ""
+    public var textAlignment: NSTextAlignment = .center
+    public var image: UIImage? = nil
+    public var backgroundColor: UIColor = .red
+    public var textColor: UIColor = .white
+    public var font: UIFont = .systemFont(ofSize: 14.0)
+    public var duration: Double? = 2.0
+    public var statusBarStyle: UIStatusBarStyle = .lightContent
+    public var aboveStatusBar: Bool = false
+    public var style: SwiftToastStyle = .navigationBar
+    
     public static var shared = SwiftToastController()
     
     var delegate: SwiftToastDelegate?
@@ -92,7 +111,7 @@ public class SwiftToastController {
             keyWindow.removeConstraint(toastViewHeightConstraint)
         }
         
-        switch currentToast.style {
+        switch (currentToast.style ?? style) {
         case .navigationBar:
             toastView?.viewTopConstraint.constant = 25.0
             toastView?.viewBottomConstraint.constant = 16.0
@@ -111,46 +130,21 @@ public class SwiftToastController {
     
     func configureStatusBar(hide: Bool) {
         if hide {
-            if currentToast.style == .statusBar || currentToast.aboveStatusBar {
+            if (currentToast.style ?? style) == .statusBar || (currentToast.aboveStatusBar ?? aboveStatusBar) {
                 UIApplication.shared.keyWindow?.windowLevel = UIWindowLevelStatusBar + 1
             } else {
-                UIApplication.shared.statusBarStyle = preferredStatusBarStyle
+                UIApplication.shared.statusBarStyle = (currentToast.statusBarStyle ?? statusBarStyle)
             }
         } else {
             UIApplication.shared.keyWindow?.windowLevel = UIWindowLevelNormal
-            UIApplication.shared.statusBarStyle = currentStatusBarStyle
+            UIApplication.shared.statusBarStyle = applicationStatusBarStyle
         }
     }
     
     // MARK:- Customizations
-    
-    var font: UIFont? {
-        get {
-            return self.toastView?.titleLabel.font
-        } set {
-            self.toastView?.titleLabel.font = newValue
-        }
-    }
-    
-    var textColor: UIColor? {
-        get {
-            return self.toastView?.titleLabel.textColor
-        } set {
-            self.toastView?.titleLabel.textColor = newValue
-        }
-    }
-    
-    var backgroundColor: UIColor? {
-        get {
-            return self.toastView?.backgroundColor
-        } set {
-            self.toastView?.backgroundColor = newValue
-        }
-    }
-    
+
     // status bar
-    var currentStatusBarStyle: UIStatusBarStyle = UIApplication.shared.statusBarStyle
-    var preferredStatusBarStyle: UIStatusBarStyle = .lightContent
+    var applicationStatusBarStyle: UIStatusBarStyle = UIApplication.shared.statusBarStyle
     
     // MARK:- Public functions
     
@@ -158,18 +152,21 @@ public class SwiftToastController {
         guard let toastView = toastView else {
             return
         }
-        
-        currentToast = toast
-        configureToastStyle()
-        
-        UIApplication.shared.keyWindow?.layoutIfNeeded()
-        font = toast.font ?? font
-        preferredStatusBarStyle = toast.statusBarStyle ?? preferredStatusBarStyle
-        delegate = toast.delegate
-        
+
         dismiss {
             // after dismiss if needed, setup toast
-            toastView.configure(with: toast.text ?? "", textAlignment: toast.textAlignment, image: toast.image, color: toast.backgroundColor ?? UIColor.white)
+            self.currentToast = toast
+            self.configureToastStyle()
+            self.statusBarStyle = toast.statusBarStyle ?? self.statusBarStyle
+            self.delegate = toast.delegate
+            
+            toastView.configure(with: toast.text ?? self.text,
+                                textColor: toast.textColor ?? self.textColor,
+                                font: toast.font ?? self.font,
+                                textAlignment: toast.textAlignment ?? self.textAlignment,
+                                image: toast.image ?? self.image,
+                                color: toast.backgroundColor ?? self.backgroundColor
+            )
             UIApplication.shared.keyWindow?.layoutIfNeeded()
 
             // present
