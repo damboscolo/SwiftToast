@@ -18,6 +18,7 @@
 		659B05B9FA77BE51D4DC75ECA72EC286 /* SwiftToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52701F6148F37460F5AF5A0BF7F340E /* SwiftToastView.swift */; };
 		82D5ACF3A2B7BFE4608EFE75BC5692C9 /* SwiftToast-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 50836BE70A219BCE47A8615964205F4F /* SwiftToast-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		830BB2E91EC538B300A11529 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830BB2E71EC5375D00A11529 /* Constants.swift */; };
+		834E54A11ED3A14300AAFEF1 /* UIViewController+SwiftToast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834E549F1ED3A13B00AAFEF1 /* UIViewController+SwiftToast.swift */; };
 		85003D5F3C68C3AB99A84E4625E4CB12 /* SwiftToastView.xib in Sources */ = {isa = PBXBuildFile; fileRef = AB24F1AFD97995939A0AA58E9A1B6D43 /* SwiftToastView.xib */; };
 		918B016A6A395A62C62BB3AD77A4EDF1 /* Pods-SwiftToast_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 009B77CF0D4D4A73D8B0FD8FC91ADA78 /* Pods-SwiftToast_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D8472CCFDED85859B853972A14F28FF8 /* SwiftToast-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 4948C8906DF6131BE0C21391328DA43B /* SwiftToast-dummy.m */; };
@@ -65,6 +66,7 @@
 		7DAD49117BE94A337D51C9734CA752E2 /* Pods-SwiftToast_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-SwiftToast_Tests.modulemap"; sourceTree = "<group>"; };
 		7F6FFA13053532FE1ECA17404EB1941D /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		830BB2E71EC5375D00A11529 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		834E549F1ED3A13B00AAFEF1 /* UIViewController+SwiftToast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+SwiftToast.swift"; sourceTree = "<group>"; };
 		83AD917E0F4C77A25EBDB213B099DAE9 /* Pods_SwiftToast_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftToast_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9D426C9B098BA5CFF0CB84FF64AE95EE /* SwiftToast-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SwiftToast-prefix.pch"; sourceTree = "<group>"; };
@@ -175,6 +177,7 @@
 		54378F2CFA4BEFA7049F80811BC03E39 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				834E549F1ED3A13B00AAFEF1 /* UIViewController+SwiftToast.swift */,
 				830BB2E71EC5375D00A11529 /* Constants.swift */,
 				03DF29AB9843FFE9F341A5EEFABB44B9 /* SwiftToast.swift */,
 				C52701F6148F37460F5AF5A0BF7F340E /* SwiftToastView.swift */,
@@ -461,6 +464,7 @@
 				D8472CCFDED85859B853972A14F28FF8 /* SwiftToast-dummy.m in Sources */,
 				244E6E6A62BF63498697C8B957D3F3F6 /* SwiftToast.swift in Sources */,
 				659B05B9FA77BE51D4DC75ECA72EC286 /* SwiftToastView.swift in Sources */,
+				834E54A11ED3A14300AAFEF1 /* UIViewController+SwiftToast.swift in Sources */,
 				85003D5F3C68C3AB99A84E4625E4CB12 /* SwiftToastView.xib in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
