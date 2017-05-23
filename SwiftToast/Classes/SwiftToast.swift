@@ -27,6 +27,7 @@ public class SwiftToast {
     public var duration: Double?
     public var statusBarStyle: UIStatusBarStyle
     public var aboveStatusBar: Bool
+    public var isUserInteractionEnabled: Bool
     public var target: SwiftToastDelegate?
     public var style: SwiftToastStyle
     
@@ -42,6 +43,7 @@ public class SwiftToast {
         duration = 2.0
         statusBarStyle = .lightContent
         aboveStatusBar = false
+        isUserInteractionEnabled = true
         target = nil
         style = .navigationBar
     }
@@ -52,9 +54,10 @@ public class SwiftToast {
                 backgroundColor: UIColor? = nil,
                 textColor: UIColor? = nil,
                 font: UIFont? = nil,
-                duration: Double? = nil,
+                duration: Double? = 0.0,
                 statusBarStyle: UIStatusBarStyle? = nil,
                 aboveStatusBar: Bool? = nil,
+                isUserInteractionEnabled: Bool? = nil,
                 target: SwiftToastDelegate? = nil,
                 style: SwiftToastStyle? = nil)
     {
@@ -64,9 +67,10 @@ public class SwiftToast {
         self.backgroundColor = backgroundColor ?? SwiftToast.defaultValue.backgroundColor
         self.textColor = textColor ?? SwiftToast.defaultValue.textColor
         self.font = font ?? SwiftToast.defaultValue.font
-        self.duration = duration ?? SwiftToast.defaultValue.duration
+        self.duration = duration == 0 ? SwiftToast.defaultValue.duration : duration
         self.statusBarStyle = statusBarStyle ?? SwiftToast.defaultValue.statusBarStyle
         self.aboveStatusBar = aboveStatusBar ?? SwiftToast.defaultValue.aboveStatusBar
+        self.isUserInteractionEnabled = isUserInteractionEnabled ?? SwiftToast.defaultValue.isUserInteractionEnabled
         self.target = target ?? SwiftToast.defaultValue.target
         self.style = style ?? SwiftToast.defaultValue.style
     }
@@ -150,12 +154,12 @@ class SwiftToastController {
     
     // MARK:- Public functions
     
-    func present(_ toast: SwiftToast) {
+    func present(_ toast: SwiftToast, animated: Bool) {
         guard let toastView = toastView else {
             return
         }
 
-        dismiss {
+        dismiss(animated) {
             // after dismiss if needed, setup toast
             self.currentToast = toast
             self.configureToastStyle()
@@ -166,19 +170,19 @@ class SwiftToastController {
                                 font: toast.font,
                                 textAlignment: toast.textAlignment,
                                 image: toast.image,
-                                color: toast.backgroundColor
-            )
+                                color: toast.backgroundColor,
+                                isUserInteractionEnabled: toast.isUserInteractionEnabled)
             UIApplication.shared.keyWindow?.layoutIfNeeded()
 
             // present
-            UIView.animate(withDuration: 0.3, delay: 0.0, options: .curveEaseOut, animations: {
+            UIView.animate(withDuration: animated ? 0.3 : 0.0, delay: 0.0, options: .curveEaseOut, animations: {
                 self.topConstraint?.constant = 0.0
                 self.configureStatusBar(hide: true)
                 UIApplication.shared.keyWindow?.layoutIfNeeded()
                 
             }, completion: { (_ finished) in
                 if finished, let duration = toast.duration {
-                    self.hideTimer = Timer.scheduledTimer(timeInterval: duration, target: self, selector: #selector(self.hideTimerSelector(_:)), userInfo: nil, repeats: false)
+                    self.hideTimer = Timer.scheduledTimer(timeInterval: duration, target: self, selector: #selector(self.hideTimerSelector(_:)), userInfo: animated, repeats: false)
                 }
             })
         }
@@ -187,11 +191,12 @@ class SwiftToastController {
     // MARK:- Animations
     
     @objc func hideTimerSelector(_ timer: Timer) {
-        dismiss(completion: nil)
+        let animated = (timer.userInfo as? Bool) ?? false
+        dismiss(animated, completion: nil)
     }
     
     var dismissForTheFirstTime = true
-    func dismiss(completion: (() -> Void)? = nil) {
+    func dismiss(_ animated: Bool, completion: (() -> Void)? = nil) {
         guard let toastView = toastView, !dismissForTheFirstTime else {
             dismissForTheFirstTime = false
             completion?()
@@ -200,7 +205,7 @@ class SwiftToastController {
         
         hideTimer.invalidate()
         
-        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
+        UIView.animate(withDuration: animated ? 0.3 : 0.0, delay: 0, options: .curveEaseOut, animations: {
             self.topConstraint?.constant = -toastView.frame.size.height
             UIApplication.shared.keyWindow?.layoutIfNeeded()
         }, completion: { (_ finished) in
@@ -214,7 +219,7 @@ class SwiftToastController {
 
 extension SwiftToastController: SwiftToastViewDelegate {
     func swiftToastViewDidTouchUpInside(_ swiftToastView: SwiftToastView) {
-        dismiss(completion: nil)
+        dismiss(true, completion: nil)
         delegate?.swiftToastDidTouchUpInside(currentToast)
     }
 }

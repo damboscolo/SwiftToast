@@ -232,7 +232,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let toast = sections[indexPath.section].rows[indexPath.row].toast
-        present(toast)
+        present(toast, animated: true)
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }
