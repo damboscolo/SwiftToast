@@ -2,6 +2,7 @@
 
 [![CI Status](http://img.shields.io/travis/damboscolo/SwiftToast.svg?style=flat)](https://travis-ci.org/damboscolo/SwiftToast)
 [![Version](https://img.shields.io/cocoapods/v/SwiftToast.svg?style=flat)](http://cocoapods.org/pods/SwiftToast)
+[![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![License](https://img.shields.io/cocoapods/l/SwiftToast.svg?style=flat)](http://cocoapods.org/pods/SwiftToast)
 [![Platform](https://img.shields.io/cocoapods/p/SwiftToast.svg?style=flat)](http://cocoapods.org/pods/SwiftToast)
 
@@ -29,7 +30,7 @@ pod "SwiftToast"
 Simply add the following lines to your Cartfile:
 
 ```ruby
-github 'damboscolo/SwiftToast', '~> 0.1'
+github 'damboscolo/SwiftToast', '~> 1.0'
 ```
 
 ## How to use
@@ -44,7 +45,18 @@ public enum SwiftToastStyle {
 }
 ```
 
-### Customization
+### To present
+
+A simple animated presentation:
+
+```swift
+let test = SwiftToast(text: "This is a Toast")
+present(toast, animated: true)
+```
+
+## Customization
+
+You may customize as individual. E.g.:
 
 ```swift
 let test = SwiftToast(
@@ -60,7 +72,20 @@ let test = SwiftToast(
             target: self,
             style: .navigationBar
 )
-SwiftToastController.shared.present(toast)
+present(toast, animated: true)
+```
+
+or you can change the default values, even the text, so all future presented toasts will look the same. E.g.:
+
+```swift
+SwiftToast.defaultValue.text = "This is a Toast"
+SwiftToast.defaultValue.backgroundColor = .green
+SwiftToast.defaultValue.fontColor = .yellow
+SwiftToast.defaultValue.image = UIImage(named: "ic_alert")
+SwiftToast.defaultValue.duration = 1.0
+
+let toast = SwiftToast(text: "This is another Toast")
+present(toast, animated: true)
 ```
 
 ### Default values
@@ -82,7 +107,7 @@ SwiftToastController.shared.present(toast)
     <td class="tg-baqh">Toast text alignment </td>
     <td class="tg-baqh">textAlignment</td>
     <td class="tg-baqh">NSTextAlignment</td>
-    <td class="tg-baqh">.left</td>
+    <td class="tg-baqh">.center</td>
   </tr>
   <tr>
     <td class="tg-baqh">Toast background color</td>
@@ -106,13 +131,13 @@ SwiftToastController.shared.present(toast)
     <td class="tg-baqh">Text font</td>
     <td class="tg-baqh">font</td>
     <td class="tg-baqh">UIFont</td>
-    <td class="tg-baqh">.systemFont(ofSize: 13.0)</td>
+    <td class="tg-baqh">.systemFont(ofSize: 14.0)</td>
   </tr>
   <tr>
     <td class="tg-baqh">Duration. If nil, user has to tap to dismiss</td>
     <td class="tg-baqh">duration</td>
     <td class="tg-baqh">Double</td>
-    <td class="tg-baqh">1.0</td>
+    <td class="tg-baqh">2.0</td>
   </tr>
   <tr>
     <td class="tg-baqh">Status bar style during toast appearance</td>
