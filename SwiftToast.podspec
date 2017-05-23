@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'SwiftToast'
-  s.version          = '0.1.0'
+  s.version          = '1.0'
   s.summary          = 'This is a simple SwiftToast.'
   s.homepage         = 'https://github.com/damboscolo/SwiftToast'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
