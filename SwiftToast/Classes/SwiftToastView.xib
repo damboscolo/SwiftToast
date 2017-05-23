@@ -29,7 +29,7 @@
                     </subviews>
                 </stackView>
             </subviews>
-            <color key="backgroundColor" red="0.0" green="0.45882352941176469" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" red="0.80784314869999996" green="0.027450980619999999" blue="0.33333334329999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="Dkp-Nm-guV" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="4wB-i6-tde"/>
                 <constraint firstAttribute="trailing" secondItem="Dkp-Nm-guV" secondAttribute="trailing" constant="16" id="WOr-DM-46p"/>

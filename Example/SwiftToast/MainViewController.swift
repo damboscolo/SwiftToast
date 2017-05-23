@@ -28,9 +28,8 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Change default backgroundColor
-        SwiftToastController.shared.backgroundColor = .green
+    
+        SwiftToast.defaultValue.backgroundColor = .purple
         
         sections = [
             Section(rows: firstSectionRows(), headerTitle: "Defaults"),
@@ -41,13 +40,12 @@ class MainViewController: UIViewController {
     
     func firstSectionRows() -> [Row] {
         return [
-            Row(title: "Default",
-                toast: SwiftToast(text: "This is a default toast, just text")),
+            Row(title: "Navigation bar",
+                toast: SwiftToast(text: "This is a navigation bar toast")),
             
-            Row(title: "Default customized",
+            Row(title: "Status bar",
                 toast: SwiftToast(
-                    text: "This is a default toast, with a diferente backgroundColor and style",
-                    backgroundColor: .green,
+                    text: "This is a status bar toast",
                     style: .statusBar))
         ]
     }
@@ -234,7 +232,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let toast = sections[indexPath.section].rows[indexPath.row].toast
-        SwiftToastController.shared.present(toast)
+        present(toast)
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }
