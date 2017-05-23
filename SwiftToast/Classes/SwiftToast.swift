@@ -39,7 +39,7 @@ public class SwiftToast {
         image = nil
         backgroundColor = .red
         textColor = .white
-        font = .systemFont(ofSize: 14.0)
+        font = .boldSystemFont(ofSize: 14.0)
         duration = 2.0
         statusBarStyle = .lightContent
         aboveStatusBar = false

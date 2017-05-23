@@ -12,6 +12,8 @@ SwiftToast is a simple Toast
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first. Open `SwiftToast.xcworkspace`
 
+![](https://github.com/damboscolo/SwiftToast/blob/development/Screenshots/Example.gif)
+
 ## Requirements
 
 * Swift 3
@@ -33,10 +35,12 @@ Simply add the following lines to your Cartfile:
 github 'damboscolo/SwiftToast', '~> 1.0'
 ```
 
-## How to use
+## Usage
 
 
 ###  Toast Style
+
+You may choose between two styles
 
 ```swift
 public enum SwiftToastStyle {
@@ -54,28 +58,52 @@ let test = SwiftToast(text: "This is a Toast")
 present(toast, animated: true)
 ```
 
-## Customization
+## Dismiss
+### Automatically
+The `SwiftToast` dismiss is controlled by the attribute `duration`. When it's over, the toast automatically dismiss.
+Another attribute that control is `isUserInteractionEnabled` that is `true` by default. When user touch above the toast it will automatically dismiss.  
 
-You may customize as individual. E.g.:
+### Programatically
+If you want to manually dismiss the toast, you can set `isUserInteractionEnabled` to `false` and `duration` as `nil`:
 
 ```swift
-let test = SwiftToast(
-            text: "This is a Toast",
-            textAlignment: .left,
-            image: nil,
-            backgroundColor: UIColor.red,
-            textColor: UIColor.white,
-            font: UIFont.boldSystemFont(ofSize: 13.0),
-            duration: 2.0,
-            statusBarStyle: .lightContent,
-            aboveStatusBar: false,
-            target: self,
-            style: .navigationBar
-)
+let test =  SwiftToast(text: "This is a SwiftToast",
+                       duration: nil,
+                       isUserInteractionEnabled: false)
 present(toast, animated: true)
 ```
 
-or you can change the default values, even the text, so all future presented toasts will look the same. E.g.:
+And to dismiss:
+
+```swift
+dismissSwiftToast(true)
+```
+
+## Customization
+
+``SwiftToast`` is very customizable. You may customize when you create SwiftTost object. Like this code:
+
+```swift
+let test =  SwiftToast(
+                    text: "This is a customized SwiftToast with image",
+                    textAlignment: .left,
+                    image: UIImage(named: "ic_alert"),
+                    backgroundColor: .purple,
+                    textColor: .white,
+                    font: .boldSystemFont(ofSize: 15.0),
+                    duration: 2.0,
+                    statusBarStyle: .lightContent,
+                    aboveStatusBar: true,
+                    target: nil,
+                    style: .navigationBar)
+present(toast, animated: true)
+```
+
+That generates this
+
+![](https://github.com/damboscolo/SwiftToast/blob/development/Screenshots/Example-message-image.gif)
+
+Or you can change the default values, even the text, so all future presented toasts will look the same:
 
 ```swift
 SwiftToast.defaultValue.text = "This is a Toast"
@@ -88,24 +116,7 @@ let toast = SwiftToast(text: "This is another Toast")
 present(toast, animated: true)
 ```
 
-This is an example for a fixed status bar toast. It is presented without duration and without user interaction. E.g.:
 
-```swift
-let toast = SwiftToast(
-             text: "This is a fixed status bar toast",
-             duration: nil,
-             isUserInteractionEnabled: false,
-             style: .statusBar
-)
-present(toast, animated: true)
-```
-
-
-### To manually dismiss
-
-```swift
-dismissSwiftToast(true)
-```
 
 ### Default values
 
@@ -150,7 +161,7 @@ dismissSwiftToast(true)
     <td class="tg-baqh">Text font</td>
     <td class="tg-baqh">font</td>
     <td class="tg-baqh">UIFont</td>
-    <td class="tg-baqh">.systemFont(ofSize: 14.0)</td>
+    <td class="tg-baqh">.boldSystemFont(ofSize: 14.0)</td>
   </tr>
   <tr>
     <td class="tg-baqh">Duration. If nil, user has to tap to dismiss</td>

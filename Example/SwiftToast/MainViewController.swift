@@ -28,13 +28,11 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
-        SwiftToast.defaultValue.backgroundColor = .purple
         
         sections = [
-            Section(rows: firstSectionRows(), headerTitle: "Defaults"),
-            Section(rows: secondSectionRows(), headerTitle: "Customization"),
-            Section(rows: thirdSectionRows(), headerTitle: "Status bar")
+            Section(rows: firstSectionRows(), headerTitle: "Default"),
+            Section(rows: secondSectionRows(), headerTitle: "Customized navigation bar"),
+            Section(rows: thirdSectionRows(), headerTitle: "Customized status bar")
         ]
     }
     
@@ -53,32 +51,17 @@ class MainViewController: UIViewController {
     func secondSectionRows() -> [Row] {
         // Navigation bar
         return [
-            Row(title: "Only message",
-                toast: SwiftToast(
-                    text: "Brasil, sil, silllllll. Ole Ole Oláaaa. É pentaaa, é pentaaaa! uhulll :)",
-                    textAlignment: .left,
-                    image: UIImage(),
-                    backgroundColor: #colorLiteral(red: 0.9607843161, green: 0.7058823705, blue: 0.200000003, alpha: 1),
-                    textColor: UIColor.green,
-                    font: UIFont.boldSystemFont(ofSize: 18.0),
-                    duration: 2.0,
-                    statusBarStyle: .lightContent,
-                    aboveStatusBar: false,
-                    target: nil,
-                    style: .navigationBar)),
-            
-            
             Row(title: "Message and image",
                 toast: SwiftToast(
-                    text: "Alert!",
+                    text: "This is a customized SwiftToast with image",
                     textAlignment: .left,
                     image: #imageLiteral(resourceName: "icAlert"),
-                    backgroundColor: #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1),
-                    textColor: UIColor.white,
-                    font: UIFont.boldSystemFont(ofSize: 30.0),
+                    backgroundColor: .purple,
+                    textColor: .white,
+                    font: .boldSystemFont(ofSize: 15.0),
                     duration: 2.0,
                     statusBarStyle: .lightContent,
-                    aboveStatusBar: false,
+                    aboveStatusBar: true,
                     target: nil,
                     style: .navigationBar)),
             
@@ -96,13 +79,27 @@ class MainViewController: UIViewController {
                     target: nil,
                     style: .navigationBar)),
             
+            Row(title: "Above status bar",
+                toast: SwiftToast(
+                    text: "You don't see status bar and the text is on center",
+                    textAlignment: .center,
+                    image: nil,
+                    backgroundColor: #colorLiteral(red: 0.9411764741, green: 0.4980392158, blue: 0.3529411852, alpha: 1),
+                    textColor: #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0),
+                    font: UIFont.boldSystemFont(ofSize: 13.0),
+                    duration: 2.0,
+                    statusBarStyle: .lightContent,
+                    aboveStatusBar: true,
+                    target: nil,
+                    style: .navigationBar)),
+            
             Row(title: "Very long text",
                 toast: SwiftToast(
                     text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
                     textAlignment: .left,
                     image: nil,
                     backgroundColor: #colorLiteral(red: 0.723318932, green: 0.7605775616, blue: 0.8339516754, alpha: 1),
-                    textColor: UIColor.black,
+                    textColor: .black,
                     font: UIFont.boldSystemFont(ofSize: 13.0),
                     duration: 9.0,
                     statusBarStyle: .default,
@@ -115,8 +112,8 @@ class MainViewController: UIViewController {
                     text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
                     textAlignment: .left,
                     image: #imageLiteral(resourceName: "icAlert"),
-                    backgroundColor: #colorLiteral(red: 0.1294117719, green: 0.2156862766, blue: 0.06666667014, alpha: 1),
-                    textColor: UIColor.white,
+                    backgroundColor: #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1),
+                    textColor: .white,
                     font: UIFont.systemFont(ofSize: 14.0),
                     duration: 9.0,
                     statusBarStyle: .lightContent,
@@ -140,30 +137,16 @@ class MainViewController: UIViewController {
             
             Row(title: "Force user interaction with delegate",
                 toast: SwiftToast(
-                    text: "Click here to dismiss",
+                    text: "Baaam!",
                     textAlignment: .left,
                     image: #imageLiteral(resourceName: "icAlert"),
                     backgroundColor: #colorLiteral(red: 0.1215686277, green: 0.01176470611, blue: 0.4235294163, alpha: 1),
                     textColor: #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0),
-                    font: UIFont.boldSystemFont(ofSize: 18.0),
+                    font: UIFont.boldSystemFont(ofSize: 13.0),
                     duration: nil,
                     statusBarStyle: .lightContent,
                     aboveStatusBar: false,
                     target: self,
-                    style: .navigationBar)),
-            
-            Row(title: "Above status bar and textAlignment",
-                toast: SwiftToast(
-                    text: "You don't see status bar and the text is on center",
-                    textAlignment: .center,
-                    image: nil,
-                    backgroundColor: #colorLiteral(red: 0.9411764741, green: 0.4980392158, blue: 0.3529411852, alpha: 1),
-                    textColor: #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0),
-                    font: UIFont.boldSystemFont(ofSize: 13.0),
-                    duration: 2.0,
-                    statusBarStyle: .lightContent,
-                    aboveStatusBar: true,
-                    target: nil,
                     style: .navigationBar))
         ]
     }
@@ -172,30 +155,9 @@ class MainViewController: UIViewController {
         return [
             Row(title: "Quick alert",
                 toast: SwiftToast(
-                    text: "Quick alert",
-                    textAlignment: .center,
-                    image: nil,
-                    backgroundColor: #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1),
-                    textColor: #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0),
-                    font: UIFont.boldSystemFont(ofSize: 12.0),
-                    duration: 1.0,
-                    statusBarStyle: .lightContent,
-                    aboveStatusBar: true,
-                    target: nil,
-                    style: .statusBar)),
-            
-            Row(title: "Quick alert",
-                toast: SwiftToast(
-                    text: "Quick alert",
-                    textAlignment: .center,
-                    image: nil,
-                    backgroundColor: #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1),
-                    textColor: #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0),
-                    font: UIFont.boldSystemFont(ofSize: 12.0),
-                    duration: 1.0,
-                    statusBarStyle: .lightContent,
-                    aboveStatusBar: true,
-                    target: nil,
+                    text: "This is a fixed status bar toast",
+                    duration: nil,
+                    isUserInteractionEnabled: false,
                     style: .statusBar))
         ]
     }
