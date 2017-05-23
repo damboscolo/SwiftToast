@@ -37,9 +37,10 @@ github 'damboscolo/SwiftToast', '~> 1.0'
 
 ## Usage
 
-You may choose between two styles.
 
 ###  Toast Style
+
+You may choose between two styles
 
 ```swift
 public enum SwiftToastStyle {
