@@ -53,15 +53,15 @@ class MainViewController: UIViewController {
         return [
             Row(title: "Message and image",
                 toast: SwiftToast(
-                    text: "Oh no, she better don't!",
+                    text: "This is a customized SwiftToast with image",
                     textAlignment: .left,
                     image: #imageLiteral(resourceName: "icAlert"),
                     backgroundColor: .purple,
-                    textColor: UIColor.white,
-                    font: UIFont.boldSystemFont(ofSize: 15.0),
+                    textColor: .white,
+                    font: .boldSystemFont(ofSize: 15.0),
                     duration: 2.0,
                     statusBarStyle: .lightContent,
-                    aboveStatusBar: false,
+                    aboveStatusBar: true,
                     target: nil,
                     style: .navigationBar)),
             
