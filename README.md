@@ -88,6 +88,25 @@ let toast = SwiftToast(text: "This is another Toast")
 present(toast, animated: true)
 ```
 
+This is an example for a fixed status bar toast. It is presented without duration and without user interaction. E.g.:
+
+```swift
+let toast = SwiftToast(
+             text: "This is a fixed status bar toast",
+             duration: nil,
+             isUserInteractionEnabled: false,
+             style: .statusBar
+)
+present(toast, animated: true)
+```
+
+
+### To manually dismiss
+
+```swift
+dismissSwiftToast(true)
+```
+
 ### Default values
 
 <table class="tg">
@@ -152,13 +171,19 @@ present(toast, animated: true)
     <td class="tg-baqh">false</td>
   </tr>
   <tr>
-    <td class="tg-baqh">Delegate</td>
+    <td class="tg-baqh">true: dismiss on click<br>false: don't dismiss</td>
+    <td class="tg-baqh">isUserInteractionEnabled</td>
+    <td class="tg-baqh">Bool</td>
+    <td class="tg-baqh">true</td>
+  </tr>
+  <tr>
+    <td class="tg-baqh">Click on toast delegate</td>
     <td class="tg-baqh">target</td>
     <td class="tg-baqh">SwiftToastDelegate</td>
     <td class="tg-baqh">nil</td>
   </tr>
   <tr>
-    <td class="tg-baqh">Toast style</td>
+    <td class="tg-baqh">Toast style: navigationBar or statusBar</td>
     <td class="tg-baqh">style</td>
     <td class="tg-baqh">SwiftToastStyle</td>
     <td class="tg-baqh">.navigationBar</td>
