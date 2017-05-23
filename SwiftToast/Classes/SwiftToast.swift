@@ -27,6 +27,7 @@ public class SwiftToast {
     public var duration: Double?
     public var statusBarStyle: UIStatusBarStyle
     public var aboveStatusBar: Bool
+    public var isUserInteractionEnabled: Bool
     public var target: SwiftToastDelegate?
     public var style: SwiftToastStyle
     
@@ -42,6 +43,7 @@ public class SwiftToast {
         duration = 2.0
         statusBarStyle = .lightContent
         aboveStatusBar = false
+        isUserInteractionEnabled = true
         target = nil
         style = .navigationBar
     }
@@ -52,9 +54,10 @@ public class SwiftToast {
                 backgroundColor: UIColor? = nil,
                 textColor: UIColor? = nil,
                 font: UIFont? = nil,
-                duration: Double? = nil,
+                duration: Double? = 0.0,
                 statusBarStyle: UIStatusBarStyle? = nil,
                 aboveStatusBar: Bool? = nil,
+                isUserInteractionEnabled: Bool? = nil,
                 target: SwiftToastDelegate? = nil,
                 style: SwiftToastStyle? = nil)
     {
@@ -64,9 +67,10 @@ public class SwiftToast {
         self.backgroundColor = backgroundColor ?? SwiftToast.defaultValue.backgroundColor
         self.textColor = textColor ?? SwiftToast.defaultValue.textColor
         self.font = font ?? SwiftToast.defaultValue.font
-        self.duration = duration ?? SwiftToast.defaultValue.duration
+        self.duration = duration == 0 ? SwiftToast.defaultValue.duration : duration
         self.statusBarStyle = statusBarStyle ?? SwiftToast.defaultValue.statusBarStyle
         self.aboveStatusBar = aboveStatusBar ?? SwiftToast.defaultValue.aboveStatusBar
+        self.isUserInteractionEnabled = isUserInteractionEnabled ?? SwiftToast.defaultValue.isUserInteractionEnabled
         self.target = target ?? SwiftToast.defaultValue.target
         self.style = style ?? SwiftToast.defaultValue.style
     }
@@ -166,8 +170,8 @@ class SwiftToastController {
                                 font: toast.font,
                                 textAlignment: toast.textAlignment,
                                 image: toast.image,
-                                color: toast.backgroundColor
-            )
+                                color: toast.backgroundColor,
+                                isUserInteractionEnabled: toast.isUserInteractionEnabled)
             UIApplication.shared.keyWindow?.layoutIfNeeded()
 
             // present

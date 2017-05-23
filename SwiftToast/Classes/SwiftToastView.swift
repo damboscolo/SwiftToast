@@ -39,11 +39,12 @@ class SwiftToastView: UIView {
     
     // MARK:- Configuration
     
-    func configure(with text: String, textColor: UIColor, font: UIFont, textAlignment: NSTextAlignment, image: UIImage?, color: UIColor) {
+    func configure(with text: String, textColor: UIColor, font: UIFont, textAlignment: NSTextAlignment, image: UIImage?, color: UIColor, isUserInteractionEnabled: Bool) {
         titleLabel.text = text
         titleLabel.textAlignment = textAlignment
         titleLabel.font = font
         backgroundColor = color
+        self.isUserInteractionEnabled = isUserInteractionEnabled
 
         if let image = image {
             imageView.image = image
