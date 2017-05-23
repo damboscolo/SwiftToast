@@ -10,12 +10,12 @@ import UIKit
 import SwiftToast
 
 public extension UIViewController {
-    public func present(_ toast: SwiftToast) {
-        SwiftToastController.shared.present(toast)
+    public func present(_ toast: SwiftToast, animated: Bool) {
+        SwiftToastController.shared.present(toast, animated: animated)
     }
     
-    public func dismissSwiftToast() {
-        SwiftToastController.shared.dismiss()
+    public func dismissSwiftToast(_ animated: Bool) {
+        SwiftToastController.shared.dismiss(animated)
     }
 }
 

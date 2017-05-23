@@ -150,12 +150,12 @@ class SwiftToastController {
     
     // MARK:- Public functions
     
-    func present(_ toast: SwiftToast) {
+    func present(_ toast: SwiftToast, animated: Bool) {
         guard let toastView = toastView else {
             return
         }
 
-        dismiss {
+        dismiss(animated) {
             // after dismiss if needed, setup toast
             self.currentToast = toast
             self.configureToastStyle()
@@ -171,14 +171,14 @@ class SwiftToastController {
             UIApplication.shared.keyWindow?.layoutIfNeeded()
 
             // present
-            UIView.animate(withDuration: 0.3, delay: 0.0, options: .curveEaseOut, animations: {
+            UIView.animate(withDuration: animated ? 0.3 : 0.0, delay: 0.0, options: .curveEaseOut, animations: {
                 self.topConstraint?.constant = 0.0
                 self.configureStatusBar(hide: true)
                 UIApplication.shared.keyWindow?.layoutIfNeeded()
                 
             }, completion: { (_ finished) in
                 if finished, let duration = toast.duration {
-                    self.hideTimer = Timer.scheduledTimer(timeInterval: duration, target: self, selector: #selector(self.hideTimerSelector(_:)), userInfo: nil, repeats: false)
+                    self.hideTimer = Timer.scheduledTimer(timeInterval: duration, target: self, selector: #selector(self.hideTimerSelector(_:)), userInfo: animated, repeats: false)
                 }
             })
         }
@@ -187,11 +187,12 @@ class SwiftToastController {
     // MARK:- Animations
     
     @objc func hideTimerSelector(_ timer: Timer) {
-        dismiss(completion: nil)
+        let animated = (timer.userInfo as? Bool) ?? false
+        dismiss(animated, completion: nil)
     }
     
     var dismissForTheFirstTime = true
-    func dismiss(completion: (() -> Void)? = nil) {
+    func dismiss(_ animated: Bool, completion: (() -> Void)? = nil) {
         guard let toastView = toastView, !dismissForTheFirstTime else {
             dismissForTheFirstTime = false
             completion?()
@@ -200,7 +201,7 @@ class SwiftToastController {
         
         hideTimer.invalidate()
         
-        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
+        UIView.animate(withDuration: animated ? 0.3 : 0.0, delay: 0, options: .curveEaseOut, animations: {
             self.topConstraint?.constant = -toastView.frame.size.height
             UIApplication.shared.keyWindow?.layoutIfNeeded()
         }, completion: { (_ finished) in
@@ -214,7 +215,7 @@ class SwiftToastController {
 
 extension SwiftToastController: SwiftToastViewDelegate {
     func swiftToastViewDidTouchUpInside(_ swiftToastView: SwiftToastView) {
-        dismiss(completion: nil)
+        dismiss(true, completion: nil)
         delegate?.swiftToastDidTouchUpInside(currentToast)
     }
 }
