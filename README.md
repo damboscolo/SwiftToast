@@ -6,7 +6,7 @@
 [![License](https://img.shields.io/cocoapods/l/SwiftToast.svg?style=flat)](http://cocoapods.org/pods/SwiftToast)
 [![Platform](https://img.shields.io/cocoapods/p/SwiftToast.svg?style=flat)](http://cocoapods.org/pods/SwiftToast)
 
-SwiftToast is a simple Toast
+A customizable iOS toast view for Swift
 
 ## Example
 

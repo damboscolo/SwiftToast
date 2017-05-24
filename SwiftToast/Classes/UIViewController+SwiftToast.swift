@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SwiftToast
 
 public extension UIViewController {
     public func present(_ toast: SwiftToast, animated: Bool) {

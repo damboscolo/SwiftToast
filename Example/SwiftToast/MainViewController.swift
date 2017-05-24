@@ -155,9 +155,16 @@ class MainViewController: UIViewController {
         return [
             Row(title: "Quick alert",
                 toast: SwiftToast(
-                    text: "This is a fixed status bar toast",
-                    duration: nil,
-                    isUserInteractionEnabled: false,
+                    text: "Quick alert",
+                    textAlignment: .center,
+                    image: nil,
+                    backgroundColor: #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1),
+                    textColor: #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0),
+                    font: UIFont.boldSystemFont(ofSize: 12.0),
+                    duration: 1.0,
+                    statusBarStyle: .lightContent,
+                    aboveStatusBar: true,
+                    target: nil,
                     style: .statusBar))
         ]
     }
