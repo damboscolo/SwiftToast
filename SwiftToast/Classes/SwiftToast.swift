@@ -112,19 +112,23 @@ class SwiftToastController {
     }
     
     func configureToastStyle() {
+        guard let toastView = toastView else {
+            return
+        }
+        
         // Remove current constraints
         if let toastViewHeightConstraint = toastViewHeightConstraint, let keyWindow = UIApplication.shared.keyWindow {
             keyWindow.removeConstraint(toastViewHeightConstraint)
         }
-        
+  
         switch currentToast.style {
         case .navigationBar:
-            toastView?.viewTopConstraint.constant = 25.0
-            toastView?.viewBottomConstraint.constant = 16.0
+            toastView.viewTopConstraint.constant = 25.0
+            toastView.viewBottomConstraint.constant = 16.0
             toastViewHeightConstraint = NSLayoutConstraint(item: toastView, attribute: .height, relatedBy: .greaterThanOrEqual, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 64.0)
         case .statusBar:
-            toastView?.viewTopConstraint.constant = 0.0
-            toastView?.viewBottomConstraint.constant = 0.0
+            toastView.viewTopConstraint.constant = 0.0
+            toastView.viewBottomConstraint.constant = 0.0
             toastViewHeightConstraint = NSLayoutConstraint(item: toastView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 20.0)
         }
         
