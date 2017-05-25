@@ -9,7 +9,7 @@
 import UIKit
 
 public protocol SwiftToastDelegate {
-    func swiftToastDidTouchUpInside(_ swiftToast: SwiftToast)
+    func swiftToastDidTouchUpInside(_ swiftToast: SwiftToastProtocol)
 }
 
 public enum SwiftToastStyle {
@@ -17,7 +17,15 @@ public enum SwiftToastStyle {
     case statusBar
 }
 
-public class SwiftToast {
+public protocol SwiftToastProtocol {
+    var duration: Double? {get set}
+    var statusBarStyle: UIStatusBarStyle {get set}
+    var aboveStatusBar: Bool {get set}
+    var target: SwiftToastDelegate? {get set}
+    var style: SwiftToastStyle {get set}
+}
+
+public class SwiftToast: SwiftToastProtocol {
     public var text: String
     public var textAlignment: NSTextAlignment
     public var image: UIImage?
@@ -30,7 +38,7 @@ public class SwiftToast {
     public var isUserInteractionEnabled: Bool
     public var target: SwiftToastDelegate?
     public var style: SwiftToastStyle
-    
+
     public static var defaultValue = SwiftToast()
     
     init() {
@@ -76,28 +84,32 @@ public class SwiftToast {
     }
 }
 
-class SwiftToastController {
+open class SwiftToastController {
 
-    // MARK:- Private vars
-    static var shared = SwiftToastController()
-    fileprivate var toastView: SwiftToastViewProtocol? = SwiftToastView().nib()
+    // MARK:- Properties
+    
+    public static var shared = SwiftToastController()
+    fileprivate var toastView: SwiftToastViewProtocol?
     fileprivate var toastViewHeightConstraint: NSLayoutConstraint?
     fileprivate var topConstraint: NSLayoutConstraint?
     fileprivate var hideTimer: Timer = Timer()
-    fileprivate var currentToast: SwiftToast = SwiftToast()
+    fileprivate var currentToast: SwiftToastProtocol = SwiftToast()
     fileprivate var delegate: SwiftToastDelegate?
+    
+    var applicationStatusBarStyle: UIStatusBarStyle = UIApplication.shared.statusBarStyle
 
     private init() {
-        self.setup()
+        self.setupToastView(SwiftToastView())
     }
     
     // MARK:- Setup
     
-    public func setCustomToastView(_ toastView: SwiftToastViewProtocol) {
-        self.toastView = toastView.nib()
-    }
-    
-    private func setup() {
+    private func setupToastView(_ newToastView: SwiftToastViewProtocol) {
+        if let oldToastView = toastView as? UIView {
+            oldToastView.removeFromSuperview()
+        }
+        toastView = newToastView.nib()
+
         if let keyWindow = UIApplication.shared.keyWindow {
             toastView?.delegate = self
 
@@ -155,26 +167,20 @@ class SwiftToastController {
             UIApplication.shared.statusBarStyle = applicationStatusBarStyle
         }
     }
-    
-    // MARK:- Customizations
 
-    // status bar
-    var applicationStatusBarStyle: UIStatusBarStyle = UIApplication.shared.statusBarStyle
-    
     // MARK:- Public functions
     
-    func present(_ toast: SwiftToast, animated: Bool) {
-        guard let toastView = toastView else {
-            return
-        }
-
+    func present(_ toast: SwiftToastProtocol, swiftToastView: SwiftToastViewProtocol, animated: Bool) {
+        
         dismiss(animated) {
+            
             // after dismiss if needed, setup toast
+            self.setupToastView(swiftToastView)
             self.currentToast = toast
             self.configureToastStyle()
             self.delegate = toast.target
             
-            toastView.configure(with: toast)
+            self.toastView?.configure(with: toast)
             UIApplication.shared.keyWindow?.layoutIfNeeded()
 
             // present
@@ -221,7 +227,8 @@ class SwiftToastController {
 }
 
 extension SwiftToastController: SwiftToastViewDelegate {
-    func swiftToastViewDidTouchUpInside(_ swiftToastView: SwiftToastView) {
+
+    public func swiftToastViewDidTouchUpInside(_ swiftToastView: SwiftToastViewProtocol) {
         dismiss(true, completion: nil)
         delegate?.swiftToastDidTouchUpInside(currentToast)
     }

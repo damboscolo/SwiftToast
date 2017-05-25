@@ -8,22 +8,17 @@
 
 import UIKit
 
-protocol SwiftToastViewProtocol: class {
+public protocol SwiftToastViewProtocol: class {
     var delegate: SwiftToastViewDelegate? {get set}
     var topConstraint: NSLayoutConstraint {get set}
     var bottomConstraint: NSLayoutConstraint {get set}
+    
     func nib() -> SwiftToastViewProtocol?
-    func configure(with toast: SwiftToast)
+    func configure(with toast: SwiftToastProtocol)
 }
 
-extension SwiftToastViewProtocol where Self: UIView {
-    func nib() -> SwiftToastViewProtocol? {
-        return Constants.bundle?.loadNibNamed("SwiftToastView", owner: self, options: nil)?.first as? SwiftToastView
-    }
-}
-
-protocol SwiftToastViewDelegate {
-    func swiftToastViewDidTouchUpInside(_ swiftToastView: SwiftToastView)
+public protocol SwiftToastViewDelegate {
+    func swiftToastViewDidTouchUpInside(_ swiftToastView: SwiftToastViewProtocol)
 }
 
 class SwiftToastView: UIView, SwiftToastViewProtocol {
@@ -59,6 +54,10 @@ class SwiftToastView: UIView, SwiftToastViewProtocol {
     
     // MARK:- Initializers
     
+    func nib() -> SwiftToastViewProtocol? {
+        return Constants.bundle?.loadNibNamed("SwiftToastView", owner: self, options: nil)?.first as? SwiftToastView
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(toastViewButtonTouchUpInside(_:))))
@@ -66,7 +65,10 @@ class SwiftToastView: UIView, SwiftToastViewProtocol {
     
     // MARK:- Configure
     
-    func configure(with toast: SwiftToast) {
+    func configure(with toast: SwiftToastProtocol) {
+        guard let toast = toast as? SwiftToast else {
+            return
+        }
         titleLabel.text = toast.text
         titleLabel.textAlignment = toast.textAlignment
         titleLabel.font = toast.font

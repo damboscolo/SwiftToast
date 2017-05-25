@@ -11,6 +11,8 @@
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
+		8338A6421ED66A720019D7E2 /* CustomSwiftToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8338A6411ED66A720019D7E2 /* CustomSwiftToastView.swift */; };
+		8338A6441ED66A7B0019D7E2 /* CustomSwiftToastView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8338A6431ED66A7B0019D7E2 /* CustomSwiftToastView.xib */; };
 		8346BCBC1E9F125100C9A095 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8346BCBA1E9F124300C9A095 /* MainViewController.swift */; };
 		8346BCBF1E9F12B200C9A095 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8346BCBD1E9F12B200C9A095 /* LaunchScreen.storyboard */; };
 		87C3FCA161A01BDEDFA7DAD2 /* Pods_SwiftToast_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C8B1EF1959EB42A22F6AC8F /* Pods_SwiftToast_Example.framework */; };
@@ -38,6 +40,8 @@
 		607FACE51AFB9204008FA782 /* SwiftToast_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftToast_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
+		8338A6411ED66A720019D7E2 /* CustomSwiftToastView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomSwiftToastView.swift; sourceTree = "<group>"; };
+		8338A6431ED66A7B0019D7E2 /* CustomSwiftToastView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomSwiftToastView.xib; sourceTree = "<group>"; };
 		8346BCBA1E9F124300C9A095 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = MainViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		8346BCBE1E9F12B200C9A095 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8C6B0BC48594BDEA9D97B642 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
@@ -104,6 +108,7 @@
 		607FACD21AFB9204008FA782 /* Example for SwiftToast */ = {
 			isa = PBXGroup;
 			children = (
+				8338A6401ED66A5F0019D7E2 /* CustomSwiftToastView */,
 				8346BCBA1E9F124300C9A095 /* MainViewController.swift */,
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
@@ -157,6 +162,15 @@
 				A23A6710438D43A006C59334 /* Pods_SwiftToast_Tests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		8338A6401ED66A5F0019D7E2 /* CustomSwiftToastView */ = {
+			isa = PBXGroup;
+			children = (
+				8338A6411ED66A720019D7E2 /* CustomSwiftToastView.swift */,
+				8338A6431ED66A7B0019D7E2 /* CustomSwiftToastView.xib */,
+			);
+			name = CustomSwiftToastView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -251,6 +265,7 @@
 				607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */,
 				8346BCBF1E9F12B200C9A095 /* LaunchScreen.storyboard in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
+				8338A6441ED66A7B0019D7E2 /* CustomSwiftToastView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -363,6 +378,7 @@
 			files = (
 				8346BCBC1E9F125100C9A095 /* MainViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
+				8338A6421ED66A720019D7E2 /* CustomSwiftToastView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
