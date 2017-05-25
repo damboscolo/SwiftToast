@@ -10,6 +10,7 @@ import UIKit
 import SwiftToast
 
 struct CustomSwiftToast: SwiftToastProtocol {
+    // Protocoled
     var duration: Double?
     var statusBarStyle: UIStatusBarStyle
     var aboveStatusBar: Bool
@@ -23,10 +24,14 @@ struct CustomSwiftToast: SwiftToastProtocol {
 }
 
 class CustomSwiftToastView: UIView, SwiftToastViewProtocol {
+    
+    // Customized
     @IBOutlet weak var viewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var viewBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subtitleLabel: UILabel!
+
+    // Protocoled
 
     var delegate: SwiftToastViewDelegate?
     
@@ -54,6 +59,9 @@ class CustomSwiftToastView: UIView, SwiftToastViewProtocol {
     
     func configure(with toast: SwiftToastProtocol) {
         if let customToast = toast as? CustomSwiftToast {
+            
+            // put your configure code here
+            
             titleLabel.text = customToast.title
             subtitleLabel.text = customToast.subtitle
             backgroundColor = customToast.backgroundColor

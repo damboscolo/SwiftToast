@@ -5,7 +5,6 @@
 [![Platform](https://img.shields.io/cocoapods/p/SwiftToast.svg?style=flat)](http://cocoapods.org/pods/SwiftToast)
 [![Version](https://img.shields.io/cocoapods/v/SwiftToast.svg?style=flat)](http://cocoapods.org/pods/SwiftToast)
 [![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
-[![License](https://img.shields.io/cocoapods/l/SwiftToast.svg?style=flat)](http://cocoapods.org/pods/SwiftToast)
 
 A customizable iOS toast view for Swift
 
@@ -21,6 +20,8 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 * iOS 9.0 or higher
 
 ## Installation
+
+### CocoaPods
 
 SwiftToast is available through [CocoaPods](http://cocoapods.org). To install
 it, simply add the following line to your Podfile:
@@ -117,7 +118,98 @@ let toast = SwiftToast(text: "This is another Toast")
 present(toast, animated: true)
 ```
 
-### Default values
+## Custom Toast View
+
+To use a custom `.xib` as toast view, you have to implement your as `SwiftToastViewProtocol`
+
+```swift
+public protocol SwiftToastViewProtocol: class {
+    var delegate: SwiftToastViewDelegate? {get set}
+    var topConstraint: NSLayoutConstraint {get set}
+    var bottomConstraint: NSLayoutConstraint {get set}
+
+    func nib() -> SwiftToastViewProtocol?
+    func configure(with toast: SwiftToastProtocol)
+}
+```
+
+### Basics class for a custom toast
+
+```swift
+struct MyCustomSwiftToast: SwiftToastProtocol {
+    // Protocoled
+    var duration: Double?
+    var statusBarStyle: UIStatusBarStyle
+    var aboveStatusBar: Bool
+    var target: SwiftToastDelegate?
+    var style: SwiftToastStyle
+
+    // Customized
+    var title: String
+    var subtitle: String
+    var backgroundColor: UIColor
+}
+
+class CustomSwiftToastView: UIView, SwiftToastViewProtocol {
+    // Customized
+    @IBOutlet weak var viewTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var viewBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var subtitleLabel: UILabel!
+
+    // Protocoled
+    var delegate: SwiftToastViewDelegate?
+
+    var topConstraint: NSLayoutConstraint {
+        get {
+            return viewTopConstraint
+        }
+        set {
+            viewTopConstraint = newValue
+        }
+    }
+
+    var bottomConstraint: NSLayoutConstraint {
+        get {
+            return viewBottomConstraint
+        }
+        set {
+            viewBottomConstraint = newValue
+        }
+    }
+
+    func nib() -> SwiftToastViewProtocol? {
+        return Bundle.main.loadNibNamed("CustomSwiftToastView", owner: self, options: nil)?.first as? CustomSwiftToastView
+    }
+
+    func configure(with toast: SwiftToastProtocol) {
+        if let customToast = toast as? CustomSwiftToast {
+            // put your configure code here. e.g.:
+            // subtitleLabel.text = customToast.subtitle
+        }
+    }
+}
+```
+
+### Present a custom toast
+
+To easily present a custom toast view:
+
+```swift
+let customToast = CustomSwiftToast(
+                    duration: 3.0,
+                    statusBarStyle: .lightContent,
+                    aboveStatusBar: true,
+                    target: nil,
+                    style: .navigationBar,
+                    title: "CUSTOM VIEW",
+                    subtitle: "This is a totally customized subtitle",
+                    backgroundColor: .blue
+            )
+present(customToast, withCustomSwiftToastView: CustomSwiftToastView(), animated: true)
+```
+
+## Default values
 
 | Property| Type|Default value|Definition|
 |---|---|---|---|
