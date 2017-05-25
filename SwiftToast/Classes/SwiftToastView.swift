@@ -8,11 +8,25 @@
 
 import UIKit
 
+protocol SwiftToastViewProtocol: class {
+    var delegate: SwiftToastViewDelegate? {get set}
+    var topConstraint: NSLayoutConstraint {get set}
+    var bottomConstraint: NSLayoutConstraint {get set}
+    func nib() -> SwiftToastViewProtocol?
+    func configure(with toast: SwiftToast)
+}
+
+extension SwiftToastViewProtocol where Self: UIView {
+    func nib() -> SwiftToastViewProtocol? {
+        return Constants.bundle?.loadNibNamed("SwiftToastView", owner: self, options: nil)?.first as? SwiftToastView
+    }
+}
+
 protocol SwiftToastViewDelegate {
     func swiftToastViewDidTouchUpInside(_ swiftToastView: SwiftToastView)
 }
 
-class SwiftToastView: UIView {
+class SwiftToastView: UIView, SwiftToastViewProtocol {
     
     var delegate: SwiftToastViewDelegate?
 
@@ -20,33 +34,46 @@ class SwiftToastView: UIView {
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!
-    
-    // MARK:- NSLayoutConstraints
-    
     @IBOutlet weak var viewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var viewBottomConstraint: NSLayoutConstraint!
     
-    // MARK:- Initializers
+    // MARK:- NSLayoutConstraints
     
-    class func nib() -> SwiftToastView? {
-        return Constants.bundle?.loadNibNamed("SwiftToastView", owner: self, options: nil)?.first as? SwiftToastView
+    var topConstraint: NSLayoutConstraint {
+        get {
+            return viewTopConstraint
+        }
+        set {
+            viewTopConstraint = newValue
+        }
     }
+    
+    var bottomConstraint: NSLayoutConstraint {
+        get {
+            return viewBottomConstraint
+        }
+        set {
+            viewBottomConstraint = newValue
+        }
+    }
+    
+    // MARK:- Initializers
     
     override func awakeFromNib() {
         super.awakeFromNib()
         addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(toastViewButtonTouchUpInside(_:))))
     }
     
-    // MARK:- Configuration
+    // MARK:- Configure
     
-    func configure(with text: String, textColor: UIColor, font: UIFont, textAlignment: NSTextAlignment, image: UIImage?, color: UIColor, isUserInteractionEnabled: Bool) {
-        titleLabel.text = text
-        titleLabel.textAlignment = textAlignment
-        titleLabel.font = font
-        backgroundColor = color
-        self.isUserInteractionEnabled = isUserInteractionEnabled
-
-        if let image = image {
+    func configure(with toast: SwiftToast) {
+        titleLabel.text = toast.text
+        titleLabel.textAlignment = toast.textAlignment
+        titleLabel.font = toast.font
+        backgroundColor = toast.backgroundColor
+        isUserInteractionEnabled = toast.isUserInteractionEnabled
+        
+        if let image = toast.image {
             imageView.image = image
             imageView.isHidden = false
         } else {

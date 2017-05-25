@@ -80,7 +80,7 @@ class SwiftToastController {
 
     // MARK:- Private vars
     static var shared = SwiftToastController()
-    fileprivate var toastView: SwiftToastView? = SwiftToastView.nib()
+    fileprivate var toastView: SwiftToastViewProtocol? = SwiftToastView().nib()
     fileprivate var toastViewHeightConstraint: NSLayoutConstraint?
     fileprivate var topConstraint: NSLayoutConstraint?
     fileprivate var hideTimer: Timer = Timer()
@@ -93,12 +93,17 @@ class SwiftToastController {
     
     // MARK:- Setup
     
+    public func setCustomToastView(_ toastView: SwiftToastViewProtocol) {
+        self.toastView = toastView.nib()
+    }
+    
     private func setup() {
         if let keyWindow = UIApplication.shared.keyWindow {
-            guard let toastView = toastView else {
+            toastView?.delegate = self
+
+            guard let toastView = toastView as? UIView else {
                 return
             }
-            toastView.delegate = self
             keyWindow.addSubview(toastView)
             
             // Set constraints
@@ -123,12 +128,12 @@ class SwiftToastController {
   
         switch currentToast.style {
         case .navigationBar:
-            toastView.viewTopConstraint.constant = 25.0
-            toastView.viewBottomConstraint.constant = 16.0
+            toastView.topConstraint.constant = 25.0
+            toastView.bottomConstraint.constant = 16.0
             toastViewHeightConstraint = NSLayoutConstraint(item: toastView, attribute: .height, relatedBy: .greaterThanOrEqual, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 64.0)
         case .statusBar:
-            toastView.viewTopConstraint.constant = 0.0
-            toastView.viewBottomConstraint.constant = 0.0
+            toastView.topConstraint.constant = 0.0
+            toastView.bottomConstraint.constant = 0.0
             toastViewHeightConstraint = NSLayoutConstraint(item: toastView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 20.0)
         }
         
@@ -169,13 +174,7 @@ class SwiftToastController {
             self.configureToastStyle()
             self.delegate = toast.target
             
-            toastView.configure(with: toast.text,
-                                textColor: toast.textColor,
-                                font: toast.font,
-                                textAlignment: toast.textAlignment,
-                                image: toast.image,
-                                color: toast.backgroundColor,
-                                isUserInteractionEnabled: toast.isUserInteractionEnabled)
+            toastView.configure(with: toast)
             UIApplication.shared.keyWindow?.layoutIfNeeded()
 
             // present
@@ -201,7 +200,7 @@ class SwiftToastController {
     
     var dismissForTheFirstTime = true
     func dismiss(_ animated: Bool, completion: (() -> Void)? = nil) {
-        guard let toastView = toastView, !dismissForTheFirstTime else {
+        guard let toastView = toastView as? UIView, !dismissForTheFirstTime else {
             dismissForTheFirstTime = false
             completion?()
             return
