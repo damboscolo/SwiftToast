@@ -34,7 +34,7 @@ pod "SwiftToast"
 Simply add the following lines to your Cartfile:
 
 ```ruby
-github 'damboscolo/SwiftToast', '~> 1.0'
+github 'damboscolo/SwiftToast'
 ```
 
 ## Usage
@@ -90,7 +90,7 @@ dismissSwiftToast(true)
 let test =  SwiftToast(
                     text: "This is a customized SwiftToast with image",
                     textAlignment: .left,
-                    image: UIImage(named: "ic_alert"),
+                    image: UIImage(named: "ic_alert"),
                     backgroundColor: .purple,
                     textColor: .white,
                     font: .boldSystemFont(ofSize: 15.0),
@@ -141,7 +141,7 @@ struct CustomSwiftToast: SwiftToastProtocol {
     var isUserInteractionEnabled: Bool
     var target: SwiftToastDelegate?
     var style: SwiftToastStyle
-    
+
     // Customized
     var title: String
     var subtitle: String
@@ -149,19 +149,19 @@ struct CustomSwiftToast: SwiftToastProtocol {
 }
 
 class CustomSwiftToastView: UIView, SwiftToastViewProtocol {
-    
+
     // Customized
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subtitleLabel: UILabel!
-    
+
     // Protocoled
     func nib() -> SwiftToastViewProtocol? {
         return Bundle.main.loadNibNamed("CustomSwiftToastView", owner: self, options: nil)?.first as? CustomSwiftToastView
     }
-    
+
     func configure(with toast: SwiftToastProtocol) {
         if let customToast = toast as? CustomSwiftToast {
-            
+
             // put your configure code here. e.g.:
             // subtitleLabel.text = customToast.subtitle
             // backgroundColor = customToast.backgroundColor
