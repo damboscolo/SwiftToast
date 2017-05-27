@@ -12,7 +12,7 @@ A customizable iOS toast view for Swift
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first. Open `SwiftToast.xcworkspace`
 
-![](https://raw.githubusercontent.com/damboscolo/SwiftToast/development/Screenshots/Example.gif)
+<img src="https://raw.githubusercontent.com/damboscolo/SwiftToast/development/Screenshots/Example.gif" alt="alt text" width="320" height="whatever">
 
 ## Requirements
 
@@ -103,7 +103,7 @@ present(toast, animated: true)
 
 That generates this
 
-![](https://raw.githubusercontent.com/damboscolo/SwiftToast/development/Screenshots/Example-message-image.gif)
+<img src="https://raw.githubusercontent.com/damboscolo/SwiftToast/development/Screenshots/Example-message-image.gif" alt="alt text" width="320" height="whatever">
 
 Or you can change the default values, even the text, so all future presented toasts will look the same:
 
