@@ -25,33 +25,8 @@ struct CustomSwiftToast: SwiftToastProtocol {
 
 class CustomSwiftToastView: UIView, SwiftToastViewProtocol {
     
-    // Customized
-    @IBOutlet weak var viewTopConstraint: NSLayoutConstraint!
-    @IBOutlet weak var viewBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subtitleLabel: UILabel!
-
-    // Protocoled
-
-    var delegate: SwiftToastViewDelegate?
-    
-    var topConstraint: NSLayoutConstraint {
-        get {
-            return viewTopConstraint
-        }
-        set {
-            viewTopConstraint = newValue
-        }
-    }
-    
-    var bottomConstraint: NSLayoutConstraint {
-        get {
-            return viewBottomConstraint
-        }
-        set {
-            viewBottomConstraint = newValue
-        }
-    }
     
     func nib() -> SwiftToastViewProtocol? {
         return Bundle.main.loadNibNamed("CustomSwiftToastView", owner: self, options: nil)?.first as? CustomSwiftToastView

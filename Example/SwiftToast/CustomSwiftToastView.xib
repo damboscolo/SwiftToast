@@ -80,8 +80,6 @@
             <connections>
                 <outlet property="subtitleLabel" destination="Nbr-lH-jKf" id="gtP-1h-KAe"/>
                 <outlet property="titleLabel" destination="VhA-4a-I5c" id="SDR-fb-ocY"/>
-                <outlet property="viewBottomConstraint" destination="a0z-uz-2x4" id="LJ3-Cp-13P"/>
-                <outlet property="viewTopConstraint" destination="bUo-f4-Wcf" id="2t1-GX-UnS"/>
             </connections>
             <point key="canvasLocation" x="-492.5" y="-809.5"/>
         </view>

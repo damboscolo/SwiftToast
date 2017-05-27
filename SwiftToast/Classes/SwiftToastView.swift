@@ -9,48 +9,18 @@
 import UIKit
 
 public protocol SwiftToastViewProtocol: class {
-    var delegate: SwiftToastViewDelegate? {get set}
-    var topConstraint: NSLayoutConstraint {get set}
-    var bottomConstraint: NSLayoutConstraint {get set}
-    
     func nib() -> SwiftToastViewProtocol?
     func configure(with toast: SwiftToastProtocol)
 }
 
-public protocol SwiftToastViewDelegate {
-    func swiftToastViewDidTouchUpInside(_ swiftToastView: SwiftToastViewProtocol)
-}
-
 class SwiftToastView: UIView, SwiftToastViewProtocol {
     
-    var delegate: SwiftToastViewDelegate?
-
     // MARK:- Outlets
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var viewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var viewBottomConstraint: NSLayoutConstraint!
-    
-    // MARK:- NSLayoutConstraints
-    
-    var topConstraint: NSLayoutConstraint {
-        get {
-            return viewTopConstraint
-        }
-        set {
-            viewTopConstraint = newValue
-        }
-    }
-    
-    var bottomConstraint: NSLayoutConstraint {
-        get {
-            return viewBottomConstraint
-        }
-        set {
-            viewBottomConstraint = newValue
-        }
-    }
     
     // MARK:- Initializers
     
@@ -60,7 +30,6 @@ class SwiftToastView: UIView, SwiftToastViewProtocol {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(toastViewButtonTouchUpInside(_:))))
     }
     
     // MARK:- Configure
@@ -81,11 +50,14 @@ class SwiftToastView: UIView, SwiftToastViewProtocol {
         } else {
             imageView.isHidden = true
         }
-    }
-    
-    // MARK:- Actions
-    
-    @objc private func toastViewButtonTouchUpInside(_ sender: UIGestureRecognizer) {
-        delegate?.swiftToastViewDidTouchUpInside(self)
+        
+        switch toast.style {
+        case .statusBar:
+            viewTopConstraint.constant = 0.0
+            viewBottomConstraint.constant = 0.0
+        default:
+            viewTopConstraint.constant = 25.0
+            viewBottomConstraint.constant = 16.0
+        }
     }
 }
