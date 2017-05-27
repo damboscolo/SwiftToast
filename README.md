@@ -48,6 +48,7 @@ You may choose between two styles
 public enum SwiftToastStyle {
     case navigationBar
     case statusBar
+    case bottomToTop
 }
 ```
 
@@ -124,10 +125,6 @@ To use a custom `.xib` as toast view, you have to implement your as `SwiftToastV
 
 ```swift
 public protocol SwiftToastViewProtocol: class {
-    var delegate: SwiftToastViewDelegate? {get set}
-    var topConstraint: NSLayoutConstraint {get set}
-    var bottomConstraint: NSLayoutConstraint {get set}
-
     func nib() -> SwiftToastViewProtocol?
     func configure(with toast: SwiftToastProtocol)
 }
@@ -136,14 +133,15 @@ public protocol SwiftToastViewProtocol: class {
 ### Basics class for a custom toast
 
 ```swift
-struct MyCustomSwiftToast: SwiftToastProtocol {
+struct CustomSwiftToast: SwiftToastProtocol {
     // Protocoled
     var duration: Double?
-    var statusBarStyle: UIStatusBarStyle
     var aboveStatusBar: Bool
+    var statusBarStyle: UIStatusBarStyle
+    var isUserInteractionEnabled: Bool
     var target: SwiftToastDelegate?
     var style: SwiftToastStyle
-
+    
     // Customized
     var title: String
     var subtitle: String
@@ -151,44 +149,26 @@ struct MyCustomSwiftToast: SwiftToastProtocol {
 }
 
 class CustomSwiftToastView: UIView, SwiftToastViewProtocol {
+    
     // Customized
-    @IBOutlet weak var viewTopConstraint: NSLayoutConstraint!
-    @IBOutlet weak var viewBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subtitleLabel: UILabel!
-
+    
     // Protocoled
-    var delegate: SwiftToastViewDelegate?
-
-    var topConstraint: NSLayoutConstraint {
-        get {
-            return viewTopConstraint
-        }
-        set {
-            viewTopConstraint = newValue
-        }
-    }
-
-    var bottomConstraint: NSLayoutConstraint {
-        get {
-            return viewBottomConstraint
-        }
-        set {
-            viewBottomConstraint = newValue
-        }
-    }
-
     func nib() -> SwiftToastViewProtocol? {
         return Bundle.main.loadNibNamed("CustomSwiftToastView", owner: self, options: nil)?.first as? CustomSwiftToastView
     }
-
+    
     func configure(with toast: SwiftToastProtocol) {
         if let customToast = toast as? CustomSwiftToast {
+            
             // put your configure code here. e.g.:
             // subtitleLabel.text = customToast.subtitle
+            // backgroundColor = customToast.backgroundColor
         }
     }
 }
+
 ```
 
 ### Present a custom toast
@@ -198,8 +178,9 @@ To easily present a custom toast view:
 ```swift
 let customToast = CustomSwiftToast(
                     duration: 3.0,
-                    statusBarStyle: .lightContent,
                     aboveStatusBar: true,
+                    statusBarStyle: .lightContent,
+                    isUserInteractionEnabled: true,
                     target: nil,
                     style: .navigationBar,
                     title: "CUSTOM VIEW",
@@ -224,7 +205,7 @@ present(customToast, withCustomSwiftToastView: CustomSwiftToastView(), animated:
 |`aboveStatusBar`|`Bool`|false|Show/Hide status bar during toast appearance|
 |`isUserInteractionEnabled`|`Bool`|false|If true, dismiss on click. If false, don't dismiss on click|
 |`target`|`SwiftToastDelegate`|nil|Click on toast delegate|
-|`style`|`SwiftToastStyle`|.navigationBar|navigationBar or statusBar style|
+|`style`|`SwiftToastStyle`|.navigationBar|navigationBar, statusBar or bottomToTop style|
 
 ## Author
 
