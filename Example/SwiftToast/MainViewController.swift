@@ -21,7 +21,7 @@ class MainViewController: UIViewController {
     
     struct Row {
         let title: String
-        let toast: SwiftToast
+        let toast: SwiftToastProtocol
     }
     
     var sections: [Section] = []
@@ -31,8 +31,38 @@ class MainViewController: UIViewController {
         
         sections = [
             Section(rows: firstSectionRows(), headerTitle: "Default"),
+            Section(rows: fourthSectionRows(), headerTitle: "Customized View"),
             Section(rows: secondSectionRows(), headerTitle: "Customized navigation bar"),
             Section(rows: thirdSectionRows(), headerTitle: "Customized status bar")
+        ]
+    }
+    
+    func fourthSectionRows() -> [Row] {
+        return [
+            Row(title: "Custom View",
+                toast: CustomSwiftToast(
+                    duration: 3.0,
+                    aboveStatusBar: true,
+                    statusBarStyle: .lightContent,
+                    isUserInteractionEnabled: true,
+                    target: nil,
+                    style: .navigationBar,
+                    title: "CUSTOM VIEW",
+                    subtitle: "This is a totally customized view with my subtitle",
+                    backgroundColor: .blue
+            )),
+            Row(title: "Changed Custom View",
+                toast: CustomSwiftToast(
+                    duration: nil,
+                    aboveStatusBar: true,
+                    statusBarStyle: .lightContent,
+                    isUserInteractionEnabled: true,
+                    target: nil,
+                    style: .bottomToTop,
+                    title: "CHANGED CUSTOM VIEW!",
+                    subtitle: "Easily change",
+                    backgroundColor: .orange
+            ))
         ]
     }
     
@@ -44,7 +74,12 @@ class MainViewController: UIViewController {
             Row(title: "Status bar",
                 toast: SwiftToast(
                     text: "This is a status bar toast",
-                    style: .statusBar))
+                    style: .statusBar)),
+            
+            Row(title: "Bottom to top",
+                toast: SwiftToast(
+                    text: "This is bottom to top toast",
+                    style: .bottomToTop))
         ]
     }
     
@@ -187,7 +222,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         if section == sections.count - 1 {
-            return "\nCreated by Daniele Boscolo\nFor more: github/damboscolo\n\n"
+            return "\nPowered by Daniele Boscolo\nFor more: github/damboscolo\n\n"
         }
         return nil
     }
@@ -200,16 +235,22 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let toast = sections[indexPath.section].rows[indexPath.row].toast
-        present(toast, animated: true)
         tableView.deselectRow(at: indexPath, animated: true)
+        
+        let toast = sections[indexPath.section].rows[indexPath.row].toast
+        
+        if indexPath.section == 1 {
+            present(toast, withCustomSwiftToastView: CustomSwiftToastView(), animated: true)
+        } else {
+            present(toast, animated: true)
+        }
     }
 }
 
 // MARK:- SwiftToastDelegate
 
 extension MainViewController: SwiftToastDelegate {
-    func swiftToastDidTouchUpInside(_ swiftToast: SwiftToast) {
+    func swiftToastDidTouchUpInside(_ swiftToast: SwiftToastProtocol) {
         let alert = UIAlertController(title: "Alert", message: "SwiftToastDidTouchUpInside delegate", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .cancel))
         present(alert, animated: true)

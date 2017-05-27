@@ -9,15 +9,25 @@
 import UIKit
 
 public protocol SwiftToastDelegate {
-    func swiftToastDidTouchUpInside(_ swiftToast: SwiftToast)
+    func swiftToastDidTouchUpInside(_ swiftToast: SwiftToastProtocol)
 }
 
 public enum SwiftToastStyle {
     case navigationBar
     case statusBar
+    case bottomToTop
 }
 
-public class SwiftToast {
+public protocol SwiftToastProtocol {
+    var duration: Double? {get set}
+    var aboveStatusBar: Bool {get set}
+    var statusBarStyle: UIStatusBarStyle {get set}
+    var isUserInteractionEnabled: Bool {get set}
+    var target: SwiftToastDelegate? {get set}
+    var style: SwiftToastStyle {get set}
+}
+
+public class SwiftToast: SwiftToastProtocol {
     public var text: String
     public var textAlignment: NSTextAlignment
     public var image: UIImage?
@@ -30,7 +40,7 @@ public class SwiftToast {
     public var isUserInteractionEnabled: Bool
     public var target: SwiftToastDelegate?
     public var style: SwiftToastStyle
-    
+
     public static var defaultValue = SwiftToast()
     
     init() {
@@ -76,113 +86,133 @@ public class SwiftToast {
     }
 }
 
-class SwiftToastController {
+open class SwiftToastController {
 
-    // MARK:- Private vars
-    static var shared = SwiftToastController()
-    fileprivate var toastView: SwiftToastView? = SwiftToastView.nib()
+    // MARK:- Properties
+    
+    public static var shared = SwiftToastController()
+    fileprivate var toastView: SwiftToastViewProtocol?
     fileprivate var toastViewHeightConstraint: NSLayoutConstraint?
     fileprivate var topConstraint: NSLayoutConstraint?
     fileprivate var hideTimer: Timer = Timer()
-    fileprivate var currentToast: SwiftToast = SwiftToast()
+    fileprivate var currentToast: SwiftToastProtocol = SwiftToast()
     fileprivate var delegate: SwiftToastDelegate?
+    
+    var applicationStatusBarStyle: UIStatusBarStyle = UIApplication.shared.statusBarStyle
 
     private init() {
-        self.setup()
+        self.setupToastView(SwiftToastView())
     }
     
     // MARK:- Setup
     
-    private func setup() {
-        if let keyWindow = UIApplication.shared.keyWindow {
-            guard let toastView = toastView else {
-                return
-            }
-            toastView.delegate = self
-            keyWindow.addSubview(toastView)
-            
-            // Set constraints
-            toastView.translatesAutoresizingMaskIntoConstraints = false
-            topConstraint = NSLayoutConstraint(item: toastView, attribute: .top, relatedBy: .equal, toItem: keyWindow, attribute: .top, multiplier: 1, constant: -toastView.frame.size.height)
-            let leadingConstraint = NSLayoutConstraint(item: toastView, attribute: .leading, relatedBy: .equal, toItem: keyWindow, attribute: .leading, multiplier: 1, constant: 0)
-            let trailingConstraint = NSLayoutConstraint(item: toastView, attribute: .trailing, relatedBy: .equal, toItem: keyWindow, attribute: .trailing, multiplier: 1, constant: 0)
-            configureToastStyle()
-            keyWindow.addConstraints([topConstraint!, leadingConstraint, trailingConstraint, toastViewHeightConstraint!])
+    private func setupToastView(_ newToastView: SwiftToastViewProtocol) {
+        if let oldToastView = toastView as? UIView {
+            oldToastView.removeFromSuperview()
         }
-    }
-    
-    func configureToastStyle() {
-        guard let toastView = toastView else {
+        toastView = newToastView.nib()
+        
+        guard let keyWindow = UIApplication.shared.keyWindow, let toastView = toastView as? UIView else {
             return
         }
+        keyWindow.addSubview(toastView)
         
-        // Remove current constraints
-        if let toastViewHeightConstraint = toastViewHeightConstraint, let keyWindow = UIApplication.shared.keyWindow {
-            keyWindow.removeConstraint(toastViewHeightConstraint)
-        }
-  
+        // Set constraints
+        toastView.translatesAutoresizingMaskIntoConstraints = false
+        let leadingConstraint = NSLayoutConstraint(item: toastView, attribute: .leading, relatedBy: .equal, toItem: keyWindow, attribute: .leading, multiplier: 1, constant: 0)
+        let trailingConstraint = NSLayoutConstraint(item: toastView, attribute: .trailing, relatedBy: .equal, toItem: keyWindow, attribute: .trailing, multiplier: 1, constant: 0)
+        
         switch currentToast.style {
         case .navigationBar:
-            toastView.viewTopConstraint.constant = 25.0
-            toastView.viewBottomConstraint.constant = 16.0
-            toastViewHeightConstraint = NSLayoutConstraint(item: toastView, attribute: .height, relatedBy: .greaterThanOrEqual, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 64.0)
+            toastViewHeightConstraint = dynamicHeightConstraint
+            topConstraint = NSLayoutConstraint(item: toastView, attribute: .top, relatedBy: .equal, toItem: keyWindow, attribute: .top, multiplier: 1, constant: -toastView.frame.size.height)
+            
         case .statusBar:
-            toastView.viewTopConstraint.constant = 0.0
-            toastView.viewBottomConstraint.constant = 0.0
             toastViewHeightConstraint = NSLayoutConstraint(item: toastView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 20.0)
+            topConstraint = NSLayoutConstraint(item: toastView, attribute: .top, relatedBy: .equal, toItem: keyWindow, attribute: .top, multiplier: 1, constant: -toastView.frame.size.height)
+        
+        case .bottomToTop:
+            toastViewHeightConstraint = dynamicHeightConstraint
+            topConstraint = NSLayoutConstraint(item: toastView, attribute: .bottom, relatedBy: .equal, toItem: keyWindow, attribute: .bottom, multiplier: 1, constant: toastView.frame.size.height)
         }
         
-        // Add new constraints
-        if let toastViewHeightConstraint = toastViewHeightConstraint, let keyWindow = UIApplication.shared.keyWindow {
-            keyWindow.addConstraint(toastViewHeightConstraint)
+        keyWindow.addConstraints([topConstraint!, leadingConstraint, trailingConstraint, toastViewHeightConstraint!])
+        
+        // Add gesture
+        if currentToast.isUserInteractionEnabled {
+            toastView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(toastViewButtonTouchUpInside(_:))))
         }
     }
     
-    func configureStatusBar(hide: Bool) {
-        if hide {
-            if currentToast.style == .statusBar || currentToast.aboveStatusBar {
+    var dynamicHeightConstraint: NSLayoutConstraint {
+        return NSLayoutConstraint(item: toastView, attribute: .height, relatedBy: .greaterThanOrEqual, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 64.0)
+    }
+    
+    // MARK:- Actions
+    
+    @objc private func toastViewButtonTouchUpInside(_ sender: UIGestureRecognizer) {
+        dismiss(true, completion: nil)
+        delegate?.swiftToastDidTouchUpInside(currentToast)
+    }
+    
+    // MARK:- Customizations
+    
+    func configureStatusBar(for presentingToast: Bool) {
+        if presentingToast {
+            switch currentToast.style {
+            case .navigationBar:
+                if currentToast.aboveStatusBar {
+                    UIApplication.shared.keyWindow?.windowLevel = UIWindowLevelStatusBar + 1
+                } else {
+                    UIApplication.shared.statusBarStyle = currentToast.statusBarStyle
+                }
+                
+            case .statusBar:
                 UIApplication.shared.keyWindow?.windowLevel = UIWindowLevelStatusBar + 1
-            } else {
-                UIApplication.shared.statusBarStyle = currentToast.statusBarStyle
+
+            case .bottomToTop:
+                break
             }
         } else {
             UIApplication.shared.keyWindow?.windowLevel = UIWindowLevelNormal
             UIApplication.shared.statusBarStyle = applicationStatusBarStyle
         }
     }
-    
-    // MARK:- Customizations
 
-    // status bar
-    var applicationStatusBarStyle: UIStatusBarStyle = UIApplication.shared.statusBarStyle
+    func configureConstraint(for presentingToast: Bool) {
+        guard let toastView = toastView as? UIView else {
+            return
+        }
+        if presentingToast {
+            self.topConstraint?.constant = 0.0
+        } else {
+            if currentToast.style == .bottomToTop {
+                self.topConstraint?.constant = toastView.frame.size.height
+            } else {
+                self.topConstraint?.constant = -toastView.frame.size.height
+            }
+        }
+        UIApplication.shared.keyWindow?.layoutIfNeeded()
+    }
     
     // MARK:- Public functions
     
-    func present(_ toast: SwiftToast, animated: Bool) {
-        guard let toastView = toastView else {
-            return
-        }
-
+    func present(_ toast: SwiftToastProtocol, swiftToastView: SwiftToastViewProtocol, animated: Bool) {
+        
         dismiss(animated) {
+            
             // after dismiss if needed, setup toast
             self.currentToast = toast
-            self.configureToastStyle()
+            self.setupToastView(swiftToastView)
             self.delegate = toast.target
-            
-            toastView.configure(with: toast.text,
-                                textColor: toast.textColor,
-                                font: toast.font,
-                                textAlignment: toast.textAlignment,
-                                image: toast.image,
-                                color: toast.backgroundColor,
-                                isUserInteractionEnabled: toast.isUserInteractionEnabled)
+            self.toastView?.configure(with: toast)
+
             UIApplication.shared.keyWindow?.layoutIfNeeded()
 
             // present
             UIView.animate(withDuration: animated ? 0.3 : 0.0, delay: 0.0, options: .curveEaseOut, animations: {
-                self.topConstraint?.constant = 0.0
-                self.configureStatusBar(hide: true)
-                UIApplication.shared.keyWindow?.layoutIfNeeded()
+                self.configureConstraint(for: true)
+                self.configureStatusBar(for: true)
                 
             }, completion: { (_ finished) in
                 if finished, let duration = toast.duration {
@@ -201,7 +231,7 @@ class SwiftToastController {
     
     var dismissForTheFirstTime = true
     func dismiss(_ animated: Bool, completion: (() -> Void)? = nil) {
-        guard let toastView = toastView, !dismissForTheFirstTime else {
+        guard let toastView = toastView as? UIView, !dismissForTheFirstTime else {
             dismissForTheFirstTime = false
             completion?()
             return
@@ -210,20 +240,12 @@ class SwiftToastController {
         hideTimer.invalidate()
         
         UIView.animate(withDuration: animated ? 0.3 : 0.0, delay: 0, options: .curveEaseOut, animations: {
-            self.topConstraint?.constant = -toastView.frame.size.height
-            UIApplication.shared.keyWindow?.layoutIfNeeded()
+            self.configureConstraint(for: false)
         }, completion: { (_ finished) in
             if finished {
-                self.configureStatusBar(hide: false)
+                self.configureStatusBar(for: false)
                 completion?()
             }
         })
-    }
-}
-
-extension SwiftToastController: SwiftToastViewDelegate {
-    func swiftToastViewDidTouchUpInside(_ swiftToastView: SwiftToastView) {
-        dismiss(true, completion: nil)
-        delegate?.swiftToastDidTouchUpInside(currentToast)
     }
 }
