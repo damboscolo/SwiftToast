@@ -42,23 +42,25 @@ class MainViewController: UIViewController {
             Row(title: "Custom View",
                 toast: CustomSwiftToast(
                     duration: 3.0,
-                    statusBarStyle: .lightContent,
                     aboveStatusBar: true,
+                    statusBarStyle: .lightContent,
+                    isUserInteractionEnabled: true,
                     target: nil,
                     style: .navigationBar,
                     title: "CUSTOM VIEW",
-                    subtitle: "This is a totally customized subtitle",
+                    subtitle: "This is a totally customized view with my subtitle",
                     backgroundColor: .blue
             )),
             Row(title: "Changed Custom View",
                 toast: CustomSwiftToast(
-                    duration: 3.0,
-                    statusBarStyle: .lightContent,
+                    duration: nil,
                     aboveStatusBar: true,
+                    statusBarStyle: .lightContent,
+                    isUserInteractionEnabled: true,
                     target: nil,
-                    style: .navigationBar,
+                    style: .bottomToTop,
                     title: "CHANGED CUSTOM VIEW!",
-                    subtitle: "Easily changed",
+                    subtitle: "Easily change",
                     backgroundColor: .orange
             ))
         ]
@@ -72,7 +74,12 @@ class MainViewController: UIViewController {
             Row(title: "Status bar",
                 toast: SwiftToast(
                     text: "This is a status bar toast",
-                    style: .statusBar))
+                    style: .statusBar)),
+            
+            Row(title: "Bottom to top",
+                toast: SwiftToast(
+                    text: "This is bottom to top toast",
+                    style: .bottomToTop))
         ]
     }
     

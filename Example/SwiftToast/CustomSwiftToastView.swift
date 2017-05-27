@@ -12,8 +12,9 @@ import SwiftToast
 struct CustomSwiftToast: SwiftToastProtocol {
     // Protocoled
     var duration: Double?
-    var statusBarStyle: UIStatusBarStyle
     var aboveStatusBar: Bool
+    var statusBarStyle: UIStatusBarStyle
+    var isUserInteractionEnabled: Bool
     var target: SwiftToastDelegate?
     var style: SwiftToastStyle
     
