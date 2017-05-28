@@ -196,6 +196,21 @@ To `statusBarStyle` works, you have to add row `View controller-based status bar
 
 <img src="https://raw.githubusercontent.com/damboscolo/SwiftToast/development/Screenshots/Plist-configuration.png">
 
+## SwiftToastDelegate
+
+There are 2 optionals delegates. They are set on the property `target`.
+
+When `isUserInteractionEnabled` is `true` and the user touched up inside the toast, this delegate is called:
+```swift
+func swiftToastDidTouchUpInside(_ swiftToast: SwiftToastProtocol)
+
+```
+
+When the `SwiftToast` is presenting, this one is called:
+```swift
+func swiftToast(_ swiftToast: SwiftToastProtocol, isPresentingWith height: CGFloat)
+```
+
 ## Default values
 
 | Property| Type|Default value|Definition|

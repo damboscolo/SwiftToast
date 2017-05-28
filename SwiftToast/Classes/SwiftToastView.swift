@@ -25,11 +25,11 @@ class SwiftToastView: UIView, SwiftToastViewProtocol {
     // MARK:- Initializers
     
     func nib() -> SwiftToastViewProtocol? {
-        return Constants.bundle?.loadNibNamed("SwiftToastView", owner: self, options: nil)?.first as? SwiftToastView
-    }
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
+        let podBundle = Bundle(for: SwiftToastView.self)
+        guard let bundleURL = podBundle.url(forResource: "SwiftToast", withExtension: "bundle"), let bundle = Bundle(url: bundleURL) else {
+            return nil
+        }
+        return bundle.loadNibNamed("SwiftToastView", owner: self, options: nil)?.first as? SwiftToastView
     }
     
     // MARK:- Configure

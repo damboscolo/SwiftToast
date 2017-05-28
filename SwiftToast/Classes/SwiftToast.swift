@@ -10,6 +10,13 @@ import UIKit
 
 public protocol SwiftToastDelegate {
     func swiftToastDidTouchUpInside(_ swiftToast: SwiftToastProtocol)
+    func swiftToast(_ swiftToast: SwiftToastProtocol, isPresentingWith height: CGFloat)
+}
+
+// Make SwiftToastDelegate as optional functions
+public extension SwiftToastDelegate {
+    func swiftToastDidTouchUpInside(_ swiftToast: SwiftToastProtocol) {}
+    func swiftToast(_ swiftToast: SwiftToastProtocol, isPresentingWith height: CGFloat) {}
 }
 
 public enum SwiftToastStyle {
@@ -137,7 +144,8 @@ open class SwiftToastController {
         }
         
         keyWindow.addConstraints([topConstraint!, leadingConstraint, trailingConstraint, toastViewHeightConstraint!])
-        
+        UIApplication.shared.keyWindow?.layoutIfNeeded()
+
         // Add gesture
         if currentToast.isUserInteractionEnabled {
             toastView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(toastViewButtonTouchUpInside(_:))))
@@ -173,6 +181,7 @@ open class SwiftToastController {
             case .bottomToTop:
                 break
             }
+            
         } else {
             UIApplication.shared.keyWindow?.windowLevel = UIWindowLevelNormal
             UIApplication.shared.statusBarStyle = applicationStatusBarStyle
@@ -213,7 +222,10 @@ open class SwiftToastController {
             UIView.animate(withDuration: animated ? 0.3 : 0.0, delay: 0.0, options: .curveEaseOut, animations: {
                 self.configureConstraint(for: true)
                 self.configureStatusBar(for: true)
-                
+                if let toastView = self.toastView as? UIView {
+                    self.delegate?.swiftToast(self.currentToast, isPresentingWith: toastView.frame.size.height)
+                }
+
             }, completion: { (_ finished) in
                 if finished, let duration = toast.duration {
                     self.hideTimer = Timer.scheduledTimer(timeInterval: duration, target: self, selector: #selector(self.hideTimerSelector(_:)), userInfo: animated, repeats: false)
