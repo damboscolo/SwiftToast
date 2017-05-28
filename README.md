@@ -39,13 +39,12 @@ github 'damboscolo/SwiftToast'
 
 ## Usage
 
-
 ###  Toast Style
 
-You may choose between two styles
+You may choose between three styles
 
 ```swift
-public enum SwiftToastStyle {
+enum SwiftToastStyle {
     case navigationBar
     case statusBar
     case bottomToTop
@@ -111,26 +110,25 @@ Or you can change the default values, even the text, so all future presented toa
 ```swift
 SwiftToast.defaultValue.text = "This is a Toast"
 SwiftToast.defaultValue.backgroundColor = .green
-SwiftToast.defaultValue.fontColor = .yellow
 SwiftToast.defaultValue.image = UIImage(named: "ic_alert")
-SwiftToast.defaultValue.duration = 1.0
+SwiftToast.defaultValue.style = .bottomToTop
 
 let toast = SwiftToast(text: "This is another Toast")
 present(toast, animated: true)
 ```
 
-## Custom Toast View
+## Custom SwiftToastView
 
-To use a custom `.xib` as toast view, you have to implement your as `SwiftToastViewProtocol`
+To use a custom `.xib`, you have to implement your as class as `SwiftToastViewProtocol`
 
 ```swift
-public protocol SwiftToastViewProtocol: class {
+protocol SwiftToastViewProtocol: class {
     func nib() -> SwiftToastViewProtocol?
     func configure(with toast: SwiftToastProtocol)
 }
 ```
 
-### Basics class for a custom toast
+### Basics class for a custom SwiftToastView
 
 ```swift
 struct CustomSwiftToast: SwiftToastProtocol {
@@ -171,7 +169,7 @@ class CustomSwiftToastView: UIView, SwiftToastViewProtocol {
 
 ```
 
-### Present a custom toast
+### Present a custom SwiftToastView
 
 To easily present a custom toast view:
 
@@ -186,30 +184,35 @@ let customToast = CustomSwiftToast(
                     title: "CUSTOM VIEW",
                     subtitle: "This is a totally customized subtitle",
                     backgroundColor: .blue
-            )
+                    )
 present(customToast, withCustomSwiftToastView: CustomSwiftToastView(), animated: true)
 ```
 
-### Configuration
+## Delegates
+
+`SwiftToastDelegate` has 3 optional delegates. They are set on the property `target` and are called when:
+
+* Presented `SwiftToast`:
+```swift
+func swiftToast(_ swiftToast: SwiftToastProtocol, presentedWith height: CGFloat)
+```
+
+* Dismissed `SwiftToast`:
+```swift
+func swiftToastDismissed(_ swiftToast: SwiftToastProtocol)
+```
+
+* If `isUserInteractionEnabled` are `true` and the user touched up inside the toast:
+```swift
+func swiftToastDidTouchUpInside(_ swiftToast: SwiftToastProtocol)
+```
+
+## Configuration
 
 To `statusBarStyle` works, you have to add row `View controller-based status bar appearance` on your `Info.plist` project and set to `NO`.
 
 <img src="https://raw.githubusercontent.com/damboscolo/SwiftToast/development/Screenshots/Plist-configuration.png">
 
-## SwiftToastDelegate
-
-There are 2 optionals delegates. They are set on the property `target`.
-
-When `isUserInteractionEnabled` is `true` and the user touched up inside the toast, this delegate is called:
-```swift
-func swiftToastDidTouchUpInside(_ swiftToast: SwiftToastProtocol)
-
-```
-
-When the `SwiftToast` is presenting, this one is called:
-```swift
-func swiftToast(_ swiftToast: SwiftToastProtocol, isPresentingWith height: CGFloat)
-```
 
 ## Default values
 

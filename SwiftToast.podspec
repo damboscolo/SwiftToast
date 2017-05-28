@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'SwiftToast'
-  s.version          = '1.1.0'
+  s.version          = '1.1.1'
   s.summary          = 'A customizable iOS toast view for Swift'
   s.homepage         = 'https://github.com/damboscolo/SwiftToast'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'

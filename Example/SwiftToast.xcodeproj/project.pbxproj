@@ -229,12 +229,10 @@
 				TargetAttributes = {
 					607FACCF1AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
-						DevelopmentTeam = 4EZK9PR9TK;
 						LastSwiftMigration = 0820;
 					};
 					607FACE41AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
-						DevelopmentTeam = 4EZK9PR9TK;
 						LastSwiftMigration = 0820;
 						TestTargetID = 607FACCF1AFB9204008FA782;
 					};
@@ -515,7 +513,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 4EZK9PR9TK;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = SwiftToast/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -532,7 +530,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 4EZK9PR9TK;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = SwiftToast/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -547,7 +545,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E94B56A9F5633C4CDB2B5C88 /* Pods-SwiftToast_Tests.debug.xcconfig */;
 			buildSettings = {
-				DEVELOPMENT_TEAM = 4EZK9PR9TK;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -566,7 +564,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = DE0853EC036585C3CF78B4EF /* Pods-SwiftToast_Tests.release.xcconfig */;
 			buildSettings = {
-				DEVELOPMENT_TEAM = 4EZK9PR9TK;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = "";
 				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
