@@ -12,7 +12,7 @@ A customizable iOS toast view for Swift
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first. Open `SwiftToast.xcworkspace`
 
-<img src="https://raw.githubusercontent.com/damboscolo/SwiftToast/development/Screenshots/Example.gif" alt="alt text" width="320" height="whatever">
+<img src="https://raw.githubusercontent.com/damboscolo/SwiftToast/development/Screenshots/Example.gif" width="320" height="whatever">
 
 ## Requirements
 
@@ -104,7 +104,7 @@ present(toast, animated: true)
 
 That generates this
 
-<img src="https://raw.githubusercontent.com/damboscolo/SwiftToast/development/Screenshots/Example-message-image.gif" alt="alt text" width="320" height="whatever">
+<img src="https://raw.githubusercontent.com/damboscolo/SwiftToast/development/Screenshots/Example-message-image.gif" width="320" height="whatever">
 
 Or you can change the default values, even the text, so all future presented toasts will look the same:
 
@@ -189,6 +189,12 @@ let customToast = CustomSwiftToast(
             )
 present(customToast, withCustomSwiftToastView: CustomSwiftToastView(), animated: true)
 ```
+
+### Configuration
+
+To `statusBarStyle` works, you have to add row `View controller-based status bar appearance` on your `Info.plist` project and set to `NO`.
+
+<img src="https://raw.githubusercontent.com/damboscolo/SwiftToast/development/Screenshots/Plist-configuration.png">
 
 ## Default values
 
