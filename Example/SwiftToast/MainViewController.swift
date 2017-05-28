@@ -31,38 +31,9 @@ class MainViewController: UIViewController {
         
         sections = [
             Section(rows: firstSectionRows(), headerTitle: "Default"),
-            Section(rows: fourthSectionRows(), headerTitle: "Customized View"),
-            Section(rows: secondSectionRows(), headerTitle: "Customized navigation bar"),
-            Section(rows: thirdSectionRows(), headerTitle: "Customized status bar")
-        ]
-    }
-    
-    func fourthSectionRows() -> [Row] {
-        return [
-            Row(title: "Custom View",
-                toast: CustomSwiftToast(
-                    duration: 3.0,
-                    aboveStatusBar: true,
-                    statusBarStyle: .lightContent,
-                    isUserInteractionEnabled: true,
-                    target: nil,
-                    style: .navigationBar,
-                    title: "CUSTOM VIEW",
-                    subtitle: "This is a totally customized view with my subtitle",
-                    backgroundColor: .blue
-            )),
-            Row(title: "Changed Custom View",
-                toast: CustomSwiftToast(
-                    duration: nil,
-                    aboveStatusBar: true,
-                    statusBarStyle: .lightContent,
-                    isUserInteractionEnabled: true,
-                    target: nil,
-                    style: .bottomToTop,
-                    title: "CHANGED CUSTOM VIEW!",
-                    subtitle: "Easily change",
-                    backgroundColor: .orange
-            ))
+            Section(rows: secondSectionRows(), headerTitle: "Customized View"),
+            Section(rows: thirdSectionRows(), headerTitle: "Customized navigation bar"),
+            Section(rows: fourthSectionRows(), headerTitle: "Customized status bar")
         ]
     }
     
@@ -84,6 +55,36 @@ class MainViewController: UIViewController {
     }
     
     func secondSectionRows() -> [Row] {
+        return [
+            Row(title: "Custom View",
+                toast: CustomSwiftToast(
+                    duration: 3.0,
+                    aboveStatusBar: true,
+                    statusBarStyle: .lightContent,
+                    isUserInteractionEnabled: true,
+                    target: nil,
+                    style: .navigationBar,
+                    title: "CUSTOM VIEW",
+                    subtitle: "This is a totally customized view with my subtitle",
+                    backgroundColor: .blue
+            )),
+            Row(title: "Customized Custom View",
+                toast: CustomSwiftToast(
+                    duration: nil,
+                    aboveStatusBar: true,
+                    statusBarStyle: .lightContent,
+                    isUserInteractionEnabled: true,
+                    target: self,
+                    style: .bottomToTop,
+                    title: "CHANGED CUSTOM VIEW!",
+                    subtitle: "Easily change. This is a subtitle with three a lot of lines! Yes, a lot of lines. It's dynamic height. Yes, totally dynamic height, This is a subtitle with three lines! Yes, a lot of lines. It's dynamic height. Yes, totally dynamic heigh ☺️☺️",
+                    backgroundColor: .orange
+            ))
+        ]
+    }
+    
+
+    func thirdSectionRows() -> [Row] {
         // Navigation bar
         return [
             Row(title: "Message and image",
@@ -186,16 +187,16 @@ class MainViewController: UIViewController {
         ]
     }
     
-    func thirdSectionRows() -> [Row] {
+    func fourthSectionRows() -> [Row] {
         return [
             Row(title: "Quick alert",
                 toast: SwiftToast(
                     text: "Quick alert",
                     textAlignment: .center,
                     image: nil,
-                    backgroundColor: #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1),
+                    backgroundColor: #colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1),
                     textColor: #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0),
-                    font: UIFont.boldSystemFont(ofSize: 12.0),
+                    font: UIFont.boldSystemFont(ofSize: 14.0),
                     duration: 1.0,
                     statusBarStyle: .lightContent,
                     aboveStatusBar: true,
@@ -254,5 +255,9 @@ extension MainViewController: SwiftToastDelegate {
         let alert = UIAlertController(title: "Alert", message: "SwiftToastDidTouchUpInside delegate", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .cancel))
         present(alert, animated: true)
+    }
+    
+    func swiftToast(_ swiftToast: SwiftToastProtocol, isPresentingWith height: CGFloat) {
+        print("😆😅 HEIGHT = \(height)")
     }
 }
