@@ -32,8 +32,7 @@ class MainViewController: UIViewController {
         sections = [
             Section(rows: firstSectionRows(), headerTitle: "Default"),
             Section(rows: secondSectionRows(), headerTitle: "Customized View"),
-            Section(rows: thirdSectionRows(), headerTitle: "Customized navigation bar"),
-            Section(rows: fourthSectionRows(), headerTitle: "Customized status bar")
+            Section(rows: thirdSectionRows(), headerTitle: "Customized navigation bar")
         ]
     }
     
@@ -169,39 +168,7 @@ class MainViewController: UIViewController {
                     statusBarStyle: .lightContent,
                     aboveStatusBar: false,
                     target: nil,
-                    style: .navigationBar)),
-            
-            Row(title: "Force user interaction with delegate",
-                toast: SwiftToast(
-                    text: "Baaam!",
-                    textAlignment: .left,
-                    image: #imageLiteral(resourceName: "icAlert"),
-                    backgroundColor: #colorLiteral(red: 0.1215686277, green: 0.01176470611, blue: 0.4235294163, alpha: 1),
-                    textColor: #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0),
-                    font: UIFont.boldSystemFont(ofSize: 13.0),
-                    duration: nil,
-                    statusBarStyle: .lightContent,
-                    aboveStatusBar: false,
-                    target: self,
                     style: .navigationBar))
-        ]
-    }
-    
-    func fourthSectionRows() -> [Row] {
-        return [
-            Row(title: "Quick alert",
-                toast: SwiftToast(
-                    text: "Quick alert",
-                    textAlignment: .center,
-                    image: nil,
-                    backgroundColor: #colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1),
-                    textColor: #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0),
-                    font: UIFont.boldSystemFont(ofSize: 14.0),
-                    duration: 1.0,
-                    statusBarStyle: .lightContent,
-                    aboveStatusBar: true,
-                    target: nil,
-                    style: .statusBar))
         ]
     }
 }
@@ -257,7 +224,11 @@ extension MainViewController: SwiftToastDelegate {
         present(alert, animated: true)
     }
     
-    func swiftToast(_ swiftToast: SwiftToastProtocol, isPresentingWith height: CGFloat) {
-        print("😆😅 HEIGHT = \(height)")
+    func swiftToast(_ swiftToast: SwiftToastProtocol, presentedWith height: CGFloat) {
+        tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, height, 0.0)
+    }
+    
+    func swiftToastDismissed(_ swiftToast: SwiftToastProtocol) {
+        tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0)
     }
 }
