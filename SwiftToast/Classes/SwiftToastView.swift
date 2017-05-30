@@ -40,6 +40,7 @@ class SwiftToastView: UIView, SwiftToastViewProtocol {
         }
         titleLabel.text = toast.text
         titleLabel.textAlignment = toast.textAlignment
+        titleLabel.textColor = toast.textColor
         titleLabel.font = toast.font
         backgroundColor = toast.backgroundColor
         isUserInteractionEnabled = toast.isUserInteractionEnabled
