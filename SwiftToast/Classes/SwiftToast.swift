@@ -239,10 +239,8 @@ open class SwiftToastController {
         dismiss(animated, completion: nil)
     }
     
-    var dismissForTheFirstTime = true
     func dismiss(_ animated: Bool, completion: (() -> Void)? = nil) {
-        guard let _ = toastView as? UIView, !dismissForTheFirstTime else {
-            dismissForTheFirstTime = false
+        guard let _ = toastView as? UIView else {
             completion?()
             return
         }
