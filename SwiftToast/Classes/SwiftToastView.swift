@@ -53,9 +53,9 @@ class SwiftToastView: UIView, SwiftToastViewProtocol {
         }
         
         switch toast.style {
-        case .statusBar:
-            viewTopConstraint.constant = 0.0
-            viewBottomConstraint.constant = 0.0
+        case .statusBar, .aboveNavigationBar:
+            viewTopConstraint.constant = 2.0
+            viewBottomConstraint.constant = 2.0
         default:
             viewTopConstraint.constant = 25.0
             viewBottomConstraint.constant = 16.0

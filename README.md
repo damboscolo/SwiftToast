@@ -10,7 +10,7 @@ A customizable iOS toast view for Swift
 
 ## Example
 
-To run the example project, clone the repo, and run `pod install` from the Example directory first. Open `SwiftToast.xcworkspace`
+To run the example project, clone the repo and open `SwiftToast.xcworkspace` from the `Example` directory.
 
 <img src="https://raw.githubusercontent.com/damboscolo/SwiftToast/development/Screenshots/Example.gif" width="320" height="whatever">
 
@@ -48,6 +48,7 @@ enum SwiftToastStyle {
     case navigationBar
     case statusBar
     case bottomToTop
+    case aboveNavigationBar
 }
 ```
 
