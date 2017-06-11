@@ -11,7 +11,6 @@
 		16FD78401EBA25A496EA825640617207 /* SwiftToast.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 6703A56C2572F06FCFB01A3E8FC2964E /* SwiftToast.bundle */; };
 		186121B94BD37C4BF3E86B059FC4FD2A /* Pods-SwiftToast_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 18138ED54DE0FAC575636B4BCE4CE4D9 /* Pods-SwiftToast_Example-dummy.m */; };
 		244E6E6A62BF63498697C8B957D3F3F6 /* SwiftToast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DF29AB9843FFE9F341A5EEFABB44B9 /* SwiftToast.swift */; };
-		3681CE7C2AC55322884EFDDEACAD2C19 /* SwiftToastView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB24F1AFD97995939A0AA58E9A1B6D43 /* SwiftToastView.xib */; };
 		4D39BE16D8C9E449F6EEAE8816A9E910 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBB3DE36805AF21409EC968A9691732F /* Foundation.framework */; };
 		587507C736E2B4FE0983047FA95686E7 /* Pods-SwiftToast_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 011B25FDCC1EB143B3E041E3A63B85D2 /* Pods-SwiftToast_Tests-dummy.m */; };
 		62DC7B002CDB4C7B636EC725B8958E44 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBB3DE36805AF21409EC968A9691732F /* Foundation.framework */; };
@@ -175,10 +174,10 @@
 		54378F2CFA4BEFA7049F80811BC03E39 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				834E549F1ED3A13B00AAFEF1 /* UIViewController+SwiftToast.swift */,
 				03DF29AB9843FFE9F341A5EEFABB44B9 /* SwiftToast.swift */,
 				C52701F6148F37460F5AF5A0BF7F340E /* SwiftToastView.swift */,
 				AB24F1AFD97995939A0AA58E9A1B6D43 /* SwiftToastView.xib */,
+				834E549F1ED3A13B00AAFEF1 /* UIViewController+SwiftToast.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -423,7 +422,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3681CE7C2AC55322884EFDDEACAD2C19 /* SwiftToastView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -29,8 +29,28 @@ class CustomSwiftToastView: UIView, SwiftToastViewProtocol {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subtitleLabel: UILabel!
     
-    func nib() -> SwiftToastViewProtocol? {
-        return Bundle.main.loadNibNamed("CustomSwiftToastView", owner: self, options: nil)?.first as? CustomSwiftToastView
+    // MARK:- Initializers
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        loadNib()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        loadNib()
+    }
+    
+    func loadNib() {
+        if let view = Bundle.main.loadNibNamed("CustomSwiftToastView", owner: self)?.first as? UIView {
+            view.frame = bounds
+            view.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+            view.isUserInteractionEnabled = true
+            addSubview(view)
+            clipsToBounds = true
+        } else {
+            assertionFailure("Could not load nib CustomSwiftToastView. ")
+        }
     }
     
     func configure(with toast: SwiftToastProtocol) {

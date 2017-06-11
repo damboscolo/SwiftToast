@@ -8,9 +8,16 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SwiftToastView" customModule="SwiftToast" customModuleProvider="target">
+            <connections>
+                <outlet property="imageView" destination="JMe-BX-zZc" id="97t-UH-9oq"/>
+                <outlet property="titleLabel" destination="aYN-wP-j3Z" id="dl5-CV-3gV"/>
+                <outlet property="viewBottomConstraint" destination="xE6-xq-DXm" id="rwM-To-xgW"/>
+                <outlet property="viewTopConstraint" destination="pG6-VF-CTS" id="Y1n-0H-dHv"/>
+            </connections>
+        </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="SwiftToastView" customModule="SwiftToast">
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
             <rect key="frame" x="0.0" y="0.0" width="375" height="143"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
@@ -37,12 +44,6 @@
                 <constraint firstAttribute="bottom" secondItem="Dkp-Nm-guV" secondAttribute="bottom" constant="12" id="xE6-xq-DXm"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <connections>
-                <outlet property="imageView" destination="JMe-BX-zZc" id="0qI-cu-Mqg"/>
-                <outlet property="titleLabel" destination="aYN-wP-j3Z" id="y0d-WR-6U8"/>
-                <outlet property="viewBottomConstraint" destination="xE6-xq-DXm" id="L1Y-qQ-G8a"/>
-                <outlet property="viewTopConstraint" destination="pG6-VF-CTS" id="Yen-Oa-6DV"/>
-            </connections>
             <point key="canvasLocation" x="-1916.5" y="-464.5"/>
         </view>
     </objects>

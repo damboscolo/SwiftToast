@@ -1,17 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CustomSwiftToastView" customModule="SwiftToast_Example" customModuleProvider="target">
+            <connections>
+                <outlet property="subtitleLabel" destination="Nbr-lH-jKf" id="gFN-vj-Lzl"/>
+                <outlet property="titleLabel" destination="VhA-4a-I5c" id="XSR-bl-tD2"/>
+            </connections>
+        </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="SXi-fG-HiU" customClass="CustomSwiftToastView" customModule="SwiftToast_Example" customModuleProvider="target">
+        <view contentMode="scaleToFill" id="SXi-fG-HiU">
             <rect key="frame" x="0.0" y="0.0" width="343" height="143"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
@@ -77,10 +82,6 @@
                 <constraint firstItem="4HW-em-EBP" firstAttribute="top" secondItem="Nbr-lH-jKf" secondAttribute="bottom" constant="15" id="ysE-Wz-2c1"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <connections>
-                <outlet property="subtitleLabel" destination="Nbr-lH-jKf" id="gtP-1h-KAe"/>
-                <outlet property="titleLabel" destination="VhA-4a-I5c" id="SDR-fb-ocY"/>
-            </connections>
             <point key="canvasLocation" x="-792.5" y="-832.5"/>
         </view>
     </objects>
