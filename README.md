@@ -48,7 +48,7 @@ enum SwiftToastStyle {
     case navigationBar
     case statusBar
     case bottomToTop
-    case aboveNavigationBar
+    case belowNavigationBar
 }
 ```
 
@@ -95,6 +95,7 @@ let test =  SwiftToast(
                     textColor: .white,
                     font: .boldSystemFont(ofSize: 15.0),
                     duration: 2.0,
+                    minimumHeight: CGFloat(100.0),
                     statusBarStyle: .lightContent,
                     aboveStatusBar: true,
                     target: nil,
@@ -135,6 +136,7 @@ protocol SwiftToastViewProtocol: class {
 struct CustomSwiftToast: SwiftToastProtocol {
     // Protocoled
     var duration: Double?
+    var minimumHeight: CGFloat?
     var aboveStatusBar: Bool
     var statusBarStyle: UIStatusBarStyle
     var isUserInteractionEnabled: Bool
@@ -152,6 +154,7 @@ class CustomSwiftToastView: UIView, SwiftToastViewProtocol {
     // Customized
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subtitleLabel: UILabel!
+    @IBOutlet weak var viewMinimumHeightConstraint: NSLayoutConstraint!
 
     // Protocoled
     func nib() -> SwiftToastViewProtocol? {
@@ -161,9 +164,16 @@ class CustomSwiftToastView: UIView, SwiftToastViewProtocol {
     func configure(with toast: SwiftToastProtocol) {
         if let customToast = toast as? CustomSwiftToast {
 
-            // put your configure code here. e.g.:
+            // Put your configure code here. e.g.:
+
             // subtitleLabel.text = customToast.subtitle
             // backgroundColor = customToast.backgroundColor
+
+            // Setup minimum height if needed
+
+            // if let minimumHeight = toast.minimumHeight {
+            //    viewMinimumHeightConstraint.constant = minimumHeight
+            // }
         }
     }
 }
@@ -177,6 +187,7 @@ To easily present a custom toast view:
 ```swift
 let customToast = CustomSwiftToast(
                     duration: 3.0,
+                    minimumHeight: nil,
                     aboveStatusBar: true,
                     statusBarStyle: .lightContent,
                     isUserInteractionEnabled: true,
@@ -193,7 +204,7 @@ present(customToast, withCustomSwiftToastView: CustomSwiftToastView(), animated:
 
 `SwiftToastDelegate` has 3 optional delegates. They are set on the property `target` and are called when:
 
-* Presented `SwiftToast`:
+* Return the presented `SwiftToast` height:
 ```swift
 func swiftToast(_ swiftToast: SwiftToastProtocol, presentedWith height: CGFloat)
 ```
@@ -207,6 +218,7 @@ func swiftToastDismissed(_ swiftToast: SwiftToastProtocol)
 ```swift
 func swiftToastDidTouchUpInside(_ swiftToast: SwiftToastProtocol)
 ```
+
 
 ## Configuration
 
@@ -226,6 +238,7 @@ To `statusBarStyle` works, you have to add row `View controller-based status bar
 |`image`|`UIImage`|nil|Toast icon|
 |`font`|`UIFont`|.boldSystemFont(ofSize: 14.0)|Text font|
 |`duration`|`Double`|2.0|Duration to dismiss. If nil, don't dismiss automatically|
+|`minimumHeight`|`CGFloat`|nil|Minimum toast's height. If nil, uses dynamic minimum height|
 |`statusBarStyle`|`UIStatusBarStyle`|.lightContent|Status bar style during toast appearance|
 |`aboveStatusBar`|`Bool`|false|Show/Hide status bar during toast appearance|
 |`isUserInteractionEnabled`|`Bool`|false|If true, dismiss on click. If false, don't dismiss on click|

@@ -21,6 +21,7 @@ class SwiftToastView: UIView, SwiftToastViewProtocol {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var viewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var viewBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var viewMinimumHeightConstraint: NSLayoutConstraint!
     
     // MARK:- Initializers
     
@@ -45,6 +46,11 @@ class SwiftToastView: UIView, SwiftToastViewProtocol {
         backgroundColor = toast.backgroundColor
         isUserInteractionEnabled = toast.isUserInteractionEnabled
         
+        // Setup minimum height if needed
+        if let minimumHeight = toast.minimumHeight {
+            viewMinimumHeightConstraint.constant = minimumHeight
+        }
+        
         if let image = toast.image {
             imageView.image = image
             imageView.isHidden = false
@@ -53,7 +59,7 @@ class SwiftToastView: UIView, SwiftToastViewProtocol {
         }
         
         switch toast.style {
-        case .statusBar, .aboveNavigationBar:
+        case .statusBar, .belowNavigationBar:
             viewTopConstraint.constant = 2.0
             viewBottomConstraint.constant = 2.0
         default:
