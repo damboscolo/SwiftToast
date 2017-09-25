@@ -21,6 +21,7 @@ class SwiftToastView: UIView, SwiftToastViewProtocol {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var viewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var viewBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var viewMinimumHeightConstraint: NSLayoutConstraint!
     
     // MARK:- Initializers
     
@@ -44,6 +45,11 @@ class SwiftToastView: UIView, SwiftToastViewProtocol {
         titleLabel.font = toast.font
         backgroundColor = toast.backgroundColor
         isUserInteractionEnabled = toast.isUserInteractionEnabled
+        
+        // Setup minimum height if needed
+        if let minimumHeight = toast.minimumHeight {
+            viewMinimumHeightConstraint.constant = minimumHeight
+        }
         
         if let image = toast.image {
             imageView.image = image

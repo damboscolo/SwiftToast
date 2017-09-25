@@ -49,11 +49,13 @@ class MainViewController: UIViewController {
             Row(title: "Bottom to top",
                 toast: SwiftToast(
                     text: "This is bottom to top toast",
+                    target: self,
                     style: .bottomToTop)),
             
             Row(title: "Below navigation bar",
                 toast: SwiftToast(
                     text: "This is Below navigation bar toast",
+                    minimumHeight: CGFloat(100.0),
                     style: .belowNavigationBar))
         ]
     }
@@ -63,6 +65,7 @@ class MainViewController: UIViewController {
             Row(title: "Custom View",
                 toast: CustomSwiftToast(
                     duration: 3.0,
+                    minimumHeight: nil,
                     aboveStatusBar: true,
                     statusBarStyle: .lightContent,
                     isUserInteractionEnabled: true,
@@ -75,6 +78,7 @@ class MainViewController: UIViewController {
             Row(title: "Customized Custom View",
                 toast: CustomSwiftToast(
                     duration: nil,
+                    minimumHeight: nil,
                     aboveStatusBar: true,
                     statusBarStyle: .lightContent,
                     isUserInteractionEnabled: true,

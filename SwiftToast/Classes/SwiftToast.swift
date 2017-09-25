@@ -17,7 +17,7 @@ public protocol SwiftToastDelegate {
 // Make SwiftToastDelegate as optional functions
 public extension SwiftToastDelegate {
     func swiftToastDidTouchUpInside(_ swiftToast: SwiftToastProtocol) {}
-    func swiftToast(_ swiftToast: SwiftToastProtocol, isPresentingWith height: CGFloat) {}
+    func swiftToast(_ swiftToast: SwiftToastProtocol, presentedWith height: CGFloat) {}
     func swiftToastDismissed(_ swiftToast: SwiftToastProtocol) {}
 }
 
@@ -30,6 +30,7 @@ public enum SwiftToastStyle {
 
 public protocol SwiftToastProtocol {
     var duration: Double? {get set}
+    var minimumHeight: CGFloat? {get set}
     var aboveStatusBar: Bool {get set}
     var statusBarStyle: UIStatusBarStyle {get set}
     var isUserInteractionEnabled: Bool {get set}
@@ -45,12 +46,13 @@ public class SwiftToast: SwiftToastProtocol {
     public var textColor: UIColor
     public var font: UIFont
     public var duration: Double?
+    public var minimumHeight: CGFloat?
     public var statusBarStyle: UIStatusBarStyle
     public var aboveStatusBar: Bool
     public var isUserInteractionEnabled: Bool
     public var target: SwiftToastDelegate?
     public var style: SwiftToastStyle
-    
+
     public static var defaultValue = SwiftToast()
     
     init() {
@@ -61,6 +63,7 @@ public class SwiftToast: SwiftToastProtocol {
         textColor = .white
         font = .boldSystemFont(ofSize: 14.0)
         duration = 2.0
+        minimumHeight = nil
         statusBarStyle = .lightContent
         aboveStatusBar = false
         isUserInteractionEnabled = true
@@ -75,6 +78,7 @@ public class SwiftToast: SwiftToastProtocol {
                 textColor: UIColor? = nil,
                 font: UIFont? = nil,
                 duration: Double? = 0.0,
+                minimumHeight: CGFloat? = nil,
                 statusBarStyle: UIStatusBarStyle? = nil,
                 aboveStatusBar: Bool? = nil,
                 isUserInteractionEnabled: Bool? = nil,
@@ -88,6 +92,7 @@ public class SwiftToast: SwiftToastProtocol {
         self.textColor = textColor ?? SwiftToast.defaultValue.textColor
         self.font = font ?? SwiftToast.defaultValue.font
         self.duration = duration == 0 ? SwiftToast.defaultValue.duration : duration
+        self.minimumHeight = minimumHeight
         self.statusBarStyle = statusBarStyle ?? SwiftToast.defaultValue.statusBarStyle
         self.aboveStatusBar = aboveStatusBar ?? SwiftToast.defaultValue.aboveStatusBar
         self.isUserInteractionEnabled = isUserInteractionEnabled ?? SwiftToast.defaultValue.isUserInteractionEnabled

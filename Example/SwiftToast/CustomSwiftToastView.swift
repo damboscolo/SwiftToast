@@ -12,6 +12,7 @@ import SwiftToast
 struct CustomSwiftToast: SwiftToastProtocol {
     // Protocoled
     var duration: Double?
+    var minimumHeight: CGFloat?
     var aboveStatusBar: Bool
     var statusBarStyle: UIStatusBarStyle
     var isUserInteractionEnabled: Bool
