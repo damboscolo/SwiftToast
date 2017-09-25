@@ -51,10 +51,10 @@ class MainViewController: UIViewController {
                     text: "This is bottom to top toast",
                     style: .bottomToTop)),
             
-            Row(title: "Above navigation bar",
+            Row(title: "Below navigation bar",
                 toast: SwiftToast(
-                    text: "This is above navigation bar toast",
-                    style: .aboveNavigationBar))
+                    text: "This is Below navigation bar toast",
+                    style: .belowNavigationBar))
         ]
     }
     

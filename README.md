@@ -48,7 +48,7 @@ enum SwiftToastStyle {
     case navigationBar
     case statusBar
     case bottomToTop
-    case aboveNavigationBar
+    case belowNavigationBar
 }
 ```
 

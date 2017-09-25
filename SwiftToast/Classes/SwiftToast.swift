@@ -25,7 +25,7 @@ public enum SwiftToastStyle {
     case navigationBar
     case statusBar
     case bottomToTop
-    case aboveNavigationBar
+    case belowNavigationBar
 }
 
 public protocol SwiftToastProtocol {
@@ -145,7 +145,7 @@ open class SwiftToastController {
             toastViewHeightConstraint = NSLayoutConstraint(item: toastView, attribute: .height, relatedBy: .greaterThanOrEqual, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 64.0)
             topConstraint = NSLayoutConstraint(item: toastView, attribute: .bottom, relatedBy: .equal, toItem: keyWindow, attribute: .bottom, multiplier: 1, constant: toastView.frame.size.height)
             
-        case .aboveNavigationBar:
+        case .belowNavigationBar:
             toastViewHeightConstraint = NSLayoutConstraint(item: toastView, attribute: .height, relatedBy: .lessThanOrEqual, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 0.0)
             topConstraint = NSLayoutConstraint(item: toastView, attribute: .top, relatedBy: .equal, toItem: keyWindow, attribute: .top, multiplier: 1, constant: 64.0)
         }
@@ -184,7 +184,7 @@ open class SwiftToastController {
             case .bottomToTop:
                 break
                 
-            case .aboveNavigationBar:
+            case .belowNavigationBar:
                 break
             }
             
@@ -199,7 +199,7 @@ open class SwiftToastController {
             return
         }
         if presentingToast {
-            if currentToast.style == .aboveNavigationBar {
+            if currentToast.style == .belowNavigationBar {
                 self.toastViewHeightConstraint?.constant = 1000.0 // Dynamic height
             } else {
                 self.topConstraint?.constant = 0.0
@@ -208,7 +208,7 @@ open class SwiftToastController {
             switch currentToast.style {
             case .bottomToTop:
                 self.topConstraint?.constant = toastView.frame.size.height
-            case .aboveNavigationBar:
+            case .belowNavigationBar:
                 self.toastViewHeightConstraint?.constant = 0.0
             default:
                 self.topConstraint?.constant = -toastView.frame.size.height
