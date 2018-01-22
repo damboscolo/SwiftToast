@@ -55,7 +55,7 @@ class MainViewController: UIViewController {
             Row(title: "Below navigation bar",
                 toast: SwiftToast(
                     text: "This is Below navigation bar toast",
-                    minimumHeight: CGFloat(100.0),
+                    minimumHeight: CGFloat(50.0),
                     style: .belowNavigationBar))
         ]
     }
