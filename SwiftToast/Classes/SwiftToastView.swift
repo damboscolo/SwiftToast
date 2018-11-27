@@ -14,14 +14,14 @@ public protocol SwiftToastViewProtocol: class {
 }
 
 class SwiftToastView: UIView, SwiftToastViewProtocol {
-    
+
     // MARK:- Outlets
     
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var viewTopConstraint: NSLayoutConstraint!
-    @IBOutlet weak var viewBottomConstraint: NSLayoutConstraint!
-    @IBOutlet weak var viewMinimumHeightConstraint: NSLayoutConstraint!
+    @IBOutlet private var titleLabel: UILabel!
+    @IBOutlet private var imageView: UIImageView!
+    @IBOutlet private var viewTopConstraint: NSLayoutConstraint!
+    @IBOutlet private var viewBottomConstraint: NSLayoutConstraint!
+    @IBOutlet private var viewMinimumHeightConstraint: NSLayoutConstraint!
     
     // MARK:- Initializers
     
@@ -57,13 +57,29 @@ class SwiftToastView: UIView, SwiftToastViewProtocol {
         } else {
             imageView.isHidden = true
         }
+
+        // For iPhone X-like
+        var compensateNotch = false
+        var statusBarHeight: CGFloat = 20.0
+        var bottomSafeArea: CGFloat = 0.0
+        if #available(iOS 11.0, tvOS 11.0, *) {
+            statusBarHeight = UIApplication.shared.delegate?.window??.safeAreaInsets.top ?? 0
+            bottomSafeArea = UIApplication.shared.delegate?.window??.safeAreaInsets.bottom ?? 0
+            compensateNotch = statusBarHeight > 20
+        }
         
         switch toast.style {
-        case .statusBar, .belowNavigationBar:
+        case .statusBar:
+            viewTopConstraint.constant = compensateNotch ? 32.0 : 2.0
+            viewBottomConstraint.constant = 2.0
+        case .belowNavigationBar:
             viewTopConstraint.constant = 2.0
             viewBottomConstraint.constant = 2.0
-        default:
+        case .bottomToTop:
             viewTopConstraint.constant = 25.0
+            viewBottomConstraint.constant = bottomSafeArea + 16.0
+        case.navigationBar:
+            viewTopConstraint.constant = statusBarHeight + 5
             viewBottomConstraint.constant = 16.0
         }
     }

@@ -27,21 +27,25 @@ struct CustomSwiftToast: SwiftToastProtocol {
 
 class CustomSwiftToastView: UIView, SwiftToastViewProtocol {
     
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var subtitleLabel: UILabel!
-    
+    @IBOutlet private var titleLabel: UILabel!
+    @IBOutlet private var subtitleLabel: UILabel!
+    @IBOutlet private var topConstraint: NSLayoutConstraint!
+
     func nib() -> SwiftToastViewProtocol? {
         return Bundle.main.loadNibNamed("CustomSwiftToastView", owner: self, options: nil)?.first as? CustomSwiftToastView
     }
     
     func configure(with toast: SwiftToastProtocol) {
-        if let customToast = toast as? CustomSwiftToast {
+        guard let customToast = toast as? CustomSwiftToast else { return }
             
-            // put your configure code here
-            
-            titleLabel.text = customToast.title
-            subtitleLabel.text = customToast.subtitle
-            backgroundColor = customToast.backgroundColor
-        }
+        // put your configure code here
+
+        titleLabel.text = customToast.title
+        subtitleLabel.text = customToast.subtitle
+        backgroundColor = customToast.backgroundColor
+
+        // Compensate iPhone X-like top notch
+        guard #available(iOS 11.0, tvOS 11.0, *) else { return }
+        topConstraint.constant = UIApplication.shared.delegate?.window??.safeAreaInsets.top ?? 0
     }
 }

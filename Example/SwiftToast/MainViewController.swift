@@ -12,7 +12,7 @@ import SwiftToast
 class MainViewController: UIViewController {
     static let simpleCellIdentifier = "simpleCellIdentifier"
     
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet private var tableView: UITableView!
     
     struct Section {
         let rows: [Row]
@@ -234,10 +234,10 @@ extension MainViewController: SwiftToastDelegate {
     }
     
     func swiftToast(_ swiftToast: SwiftToastProtocol, presentedWith height: CGFloat) {
-        tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, height, 0.0)
+        tableView.contentInset = UIEdgeInsets.init(top: 0.0, left: 0.0, bottom: height, right: 0.0)
     }
     
     func swiftToastDismissed(_ swiftToast: SwiftToastProtocol) {
-        tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0)
+        tableView.contentInset = UIEdgeInsets.init(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0)
     }
 }
