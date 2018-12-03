@@ -16,7 +16,8 @@ To run the example project, clone the repo and open `SwiftToast.xcworkspace` fro
 
 ## Requirements
 
-* Swift 3
+* Swift 3 (SwiftToast 1.1.3)
+* Swift 4 (SwiftToast 1.2)
 * iOS 9.0 or higher
 
 ## Installation
@@ -152,9 +153,9 @@ struct CustomSwiftToast: SwiftToastProtocol {
 class CustomSwiftToastView: UIView, SwiftToastViewProtocol {
 
     // Customized
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var subtitleLabel: UILabel!
-    @IBOutlet weak var viewMinimumHeightConstraint: NSLayoutConstraint!
+    @IBOutlet private var titleLabel: UILabel!
+    @IBOutlet private var subtitleLabel: UILabel!
+    @IBOutlet private var viewMinimumHeightConstraint: NSLayoutConstraint!
 
     // Protocoled
     func nib() -> SwiftToastViewProtocol? {
@@ -162,19 +163,18 @@ class CustomSwiftToastView: UIView, SwiftToastViewProtocol {
     }
 
     func configure(with toast: SwiftToastProtocol) {
-        if let customToast = toast as? CustomSwiftToast {
+        guard let customToast = toast as? CustomSwiftToast else { return }
 
-            // Put your configure code here. e.g.:
+        // Put your configure code here. e.g.:
 
-            // subtitleLabel.text = customToast.subtitle
-            // backgroundColor = customToast.backgroundColor
+        // subtitleLabel.text = customToast.subtitle
+        // backgroundColor = customToast.backgroundColor
 
-            // Setup minimum height if needed
+        // Setup minimum height if needed
 
-            // if let minimumHeight = toast.minimumHeight {
-            //    viewMinimumHeightConstraint.constant = minimumHeight
-            // }
-        }
+        // if let minimumHeight = toast.minimumHeight {
+        //    viewMinimumHeightConstraint.constant = minimumHeight
+        // }
     }
 }
 
